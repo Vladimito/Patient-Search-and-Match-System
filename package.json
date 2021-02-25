@@ -1,0 +1,30 @@
+{
+  "name": "patient-search-and-match-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vladimito/Patient-Search-and-Match-System.git"
+  },
+  "author": "Andrade Vladimir, Ryan Tuck, Tyson Hickey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vladimito/Patient-Search-and-Match-System/issues"
+  },
+  "homepage": "https://github.com/Vladimito/Patient-Search-and-Match-System#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "mocha": "^8.3.0",
+    "mongodb": "^3.6.4",
+    "request": "^2.88.2",
+    "validatorjs": "^3.22.1"
+  }
+}
