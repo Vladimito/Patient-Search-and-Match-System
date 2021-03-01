@@ -43,6 +43,8 @@ class Patient {
         this.illness = illness
     }
 
+
+
     isValid(){
         const rules = {
             id: 'required|integer',
@@ -74,4 +76,7 @@ class Patient {
             }
         });
     }
-};
+}
+
+module.exports = Patient;
+
