@@ -1,4 +1,6 @@
 const Validator = require("validatorjs");
+const ctoj = require("csvtojson/v2"); //imports to convert csv dataset into json
+const csvPath = 'csv/patient.csv';
 
 async function _get_patients_collection (db){
     try{
@@ -7,6 +9,25 @@ async function _get_patients_collection (db){
         throw err;
     }
 };
+
+//This function will read patients.csv and convert it into a JSON array
+//Then it will load it into the database
+//As of now it does not send the json into the mongodb due to attribute differences
+async function _loadDB(db){
+    let jsonArray = await ctoj().fromFile(csvPath); //converts contents to jsonArray
+    let collection = await _get_patients_collection(db); //gets the patientcollection
+    //for each that will iterate throughout the jsonArray
+    //for each element in the array it will insert it into the mongodb
+    jsonArray.forEach(element => {
+        collection.insertOne(element, (err,obj) =>{
+            if(err) reject(err);
+            //The two console logs are mainly for debugging
+            console.log("Inserting.."); 
+            console.log('A document was inserted in the database');
+            resolve("{msg: 'Document correctlyed inserted into database'}")
+        });
+    });
+}
 
 class Patient {
     constructor(id, name, gender, age, height, weight, location, symptoms, conditions, illness) {
