@@ -1,7 +1,7 @@
 const Patient = require("../models/patient.js");
 
 const create = async (req, res) => {
-	const new_patient = new Patient(parseInt(req.body.id), req.body.name, req.body.gender, parseInt(req.body.age), parseInt(req.body.height), parseInt(req.body.weight), req.body.location, req.body.symptoms, req.body.conditions, req.body.illness);
+	const new_patient = new Patient(req.body.id,req.body.bday='',req.body.dday='',req.body.ssn,req.body.drivers='',req.body.passport='',req.body.prefix='',req.body.first,req.body.last,req.body.maiden='',req.body.martial='',req.body.race,req.body.ethnicity,req.body.gender,req.body.birthplace='',req.body.address,req.body.city,req.body.county,req.body.zip='',req.body.lat=0,req.body.low=0,parseInt(req.body.healthExpenses=0),parseInt(req.body.healthCoverage=0));
 	if(new_patient.isValid()) {
 		let db = req.db;
 		try{

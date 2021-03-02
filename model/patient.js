@@ -30,33 +30,61 @@ async function _loadDB(db){
 }
 
 class Patient {
-    constructor(id, name, gender, age, height, weight, location, symptoms, conditions, illness) {
+    constructor(id, bday,dday, ssn,drivers,passport,prefix,first,last,maiden,martial,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,low,healthExpenses,healthCoverage) {
         this.id = id
-        this.name = name
+        this.bday = bday
+        this.dday = dday
+        this.ssn = ssn
+        this.drivers = drivers
+        this.passport = passport
+        this.prefix = prefix
+        this.first = first
+        this.last = last
+        this.maiden = maiden
+        this.martial = martial
+        this.race = race
+        this.ethnicity = ethnicity
         this.gender = gender
-        this.age = age
-        this.height = height
-        this.weight = weight
-        this.location = location
-        this.symptoms = symptoms
-        this.conditions = conditions
-        this.illness = illness
+        this.birthplace = birthplace
+        this.address = address
+        this.city = city
+        this.state = state
+        this.county = county
+        this.zip = zip
+        this.lat = lat
+        this.low = low
+        this.healthExpenses = healthExpenses
+        this.healthCoverage = healthCoverage
     }
 
 
 
     isValid(){
         const rules = {
-            id: 'required|integer',
-            name: 'required|string',
-            gender: 'required|string',
-            age: 'required|integer',
-            height: 'required|integer',
-            weight: 'required|integer',
-            location: 'required|string',
-            symptoms: 'required|array',
-            conditions: 'requires|array',
-            illness: 'required|array'
+            id: 'required|string',
+            bday: 'required|string',
+            dday: 'string',
+            ssn: 'required|string',
+            drivers: 'string',
+            passport: 'string',
+            prefix: 'string',
+            first: 'required|string',
+            last: 'required|string',
+            maiden: 'string',
+            martial: 'string',
+            race: 'required|string',
+            ethnicity: 'required|string',
+            gender: 'required|string|max:1',
+            birthplace: 'required|string',
+            address: 'required|string',
+            city: 'required|string',
+            county: 'required|string',
+            zip: 'required|string|max:9',
+            lat: 'integer',
+            low: 'integer',
+            healthExpenses: 'integer',
+            healthCoverage: 'integer'
+
         }
         const validation = new Validator(this, rules);
         return validation.passes();
@@ -76,6 +104,17 @@ class Patient {
             }
         });
     }
+
+
+    static async delete(db,id) {
+        var id_delete =id;
+        return new Promise(async function(resolve,reject){
+            let collection = await _get_patients_collection(db);
+            
+        })
+    }
+
+
 }
 
 module.exports = Patient;
