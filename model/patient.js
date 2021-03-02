@@ -34,7 +34,7 @@ async function _loadDB(db){
 }
 
 class Patient {
-    constructor(id, bday,dday, ssn,drivers,passport,prefix,first,last,maiden,martial,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,low,healthExpenses,healthCoverage) {
+    constructor(id, bday,dday, ssn,drivers,passport,prefix,first,last,suffix,maiden,martial,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,low,healthExpenses,healthCoverage) {
         this.id = id
         this.bday = bday
         this.dday = dday
@@ -44,6 +44,7 @@ class Patient {
         this.prefix = prefix
         this.first = first
         this.last = last
+        this.suffix = suffix
         this.maiden = maiden
         this.martial = martial
         this.race = race
@@ -74,6 +75,7 @@ class Patient {
             prefix: 'string',
             first: 'required|string',
             last: 'required|string',
+            suffix: 'string',
             maiden: 'string',
             martial: 'string',
             race: 'required|string',
@@ -112,6 +114,7 @@ class Patient {
         });
     }
 
+    static async update(db,id,bday,dday,ssn,drivers=0,passport,prefix='',first,last,)
     //Method that deletes a patient in the database
     //finds a patient based on their id and deletes them from the database
     static async delete(db,id) {
