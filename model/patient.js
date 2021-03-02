@@ -114,7 +114,22 @@ class Patient {
         });
     }
 
-    static async update(db,id,bday,dday,ssn,drivers=0,passport,prefix='',first,last,)
+    static async update(db,id,bday,dday,ssn,passport,prefix='',first,last,suffix='',maiden='',martial='',race,ethnicity,gender,birthplace='',address,city,county,zip,lat=0,low=0,healthExpenses=0,healthCoverage=0){
+        return new Promise(async function(resolve,reject){
+            let collection = await _get_patients_collection(db);
+            let findP = await collection.findOne({id:id},{upsert: true});
+            if(findP != null || findP != undefined){
+                collection.updateOne({id: id},
+                    {$set: {"id": id, "bday": bday,"dday": dday,"ssn":ssn,"passport":passport,first,last,race,ethnicity,gender,address,city,county,zip}})
+                    console.log("Document with id = " + id + "was updated");
+                    resolve("{msg: 'Document was correctly updated'}")
+    
+            }else{
+                reject("{msg: 'Cannot update document that doesn't exist'}");
+            }
+        });
+
+    }   
     //Method that deletes a patient in the database
     //finds a patient based on their id and deletes them from the database
     static async delete(db,id) {
