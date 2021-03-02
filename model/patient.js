@@ -10,9 +10,13 @@ async function _get_patients_collection (db){
     }
 };
 
+const options = {
+    projection: {_id:0,id:1, bday:1,dday:1, ssn:1,drivers:1,passport:1,prefix:1,first:1,last:1,maiden:1,martial:1,race:1,ethnicity:1,gender:1,birthplace:1,address:1,city:1,state:1,county:1,zip:1,lat:1,low:1,healthExpenses:1,healthCoverage:1},
+};
+
 //This function will read patients.csv and convert it into a JSON array
 //Then it will load it into the database
-//As of now it does not send the json into the mongodb due to attribute differences
+//Will be used when testing is started
 async function _loadDB(db){
     let jsonArray = await ctoj().fromFile(csvPath); //converts contents to jsonArray
     let collection = await _get_patients_collection(db); //gets the patientcollection
@@ -90,6 +94,9 @@ class Patient {
         return validation.passes();
     };
 
+    //Method that saves a patient into the database
+    //takes the data from the patient object that calls the method
+    //and the places it inside the patient database
     async save(db) {
         var patient = this;
         return new Promise(async function (resolve, reject){
@@ -105,14 +112,57 @@ class Patient {
         });
     }
 
-
+    //Method that deletes a patient in the database
+    //finds a patient based on their id and deletes them from the database
     static async delete(db,id) {
         var id_delete =id;
         return new Promise(async function(resolve,reject){
             let collection = await _get_patients_collection(db);
-            
-        })
+            collection.deleteOne({id: id_delete}, (err,obj) =>{
+                if(err) reject(err);
+                console.log("The patient with id = " + id_delete + ' was correctly deleted');
+                resolve("{msg: 'The patient was deleted from the database'}")
+            });
+        });
     }
+
+    static async getPatientByID(db, id) {
+        var id_get = id;
+        return new Promise(async function(resolve, reject){
+            var err,obj;
+            let collection = await _get_patients_collection(db);
+            let matchedPatient = await collection.find({id: id_get},options).toArray((err,obj));
+            console.log("matchedPatient before first stringify: " + matchedPatient); //debugging line
+            if(matchedPatient != null || matchedPatient != undefined){
+                console.log("Found patient: " + JSON.stringify(matchedPatient));
+                resolve(JSON.stringify(matchedPatient))
+            }else{
+                console.log("Could not find a patient with that ID");
+                reject("{msg: 'Could not find a patient with that ID'}")
+            }
+        });
+    }
+
+    static async getPatients(db) {
+        return new Promise(async function(resolve, reject){
+            var patientList = [];
+            let collection = await _get_patients_collection(db);
+            let count = await collection.countDocuments({});
+            if(count != null || count != undefined || count != 0){
+                await collection.find({},options).forEach(function(patient){
+                    console.log("Patient: " + patient);
+                    patientList.push(patient);
+                })
+                console.log("patientList: " + patientList);
+                resolve(JSON.stringify(patientList));
+           }else{
+               console.log("Database is empty");
+               reject("{msg: 'Cannot locate documents in an empty database'}")
+           }
+        });
+    }
+
+
 
 
 }
