@@ -126,23 +126,16 @@ class Patient {
             let findP = await collection.findOne({id:id},{upsert:true});
             if (patient.isValid()) {
                 if(findP === null || findP === undefined){
+
+                }else{
+                    newId = patientIDGen();
+                    patient.id = newId;
                     collection.insertOne(patient, function(err) {
                         if (err) throw err;
                         resolve("Patient added correctly");
                     });
-                }else{
-                    newId = patientIDGen();
-                    patient.id = newId;
-                    collection.insertOne(patient,function(err)) {
-                        if(err) throw err;
-                        resolve("Patient added correctly");
-                    }
-                }
-            }else{
-                reject("Data invalid; patient was not added");
             }
-
-
+        }
         });
     }
 
