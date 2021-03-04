@@ -122,24 +122,31 @@ class Patient {
     async save(db) {
         var patient = this;
         return new Promise(async function (resolve, reject){
-            let collection = await _get_patients_collection(db);
-            let findP = await collection.findOne({id:id},{upsert:true});
-            if (patient.isValid()) {
-                if(findP === null || findP === undefined){
-
+            let collection = await _get_patients_collection(db); 
+            let findP = await collection.findOne({id:id},{upsert:true}); //check if there's a patient with that ID
+            if (patient.isValid()) { //check if the patient's entered attributes are valid
+                if(findP === null || findP === undefined){ //if the patient is valid enter them into the database
+                    collection.insertOne(patient, function(err) {
+                        if (err) throw err;
+                        resolve("Patient added correctly");
+                    });
                 }else{
+                    //Otherwise generate a new id and change the id 
                     newId = patientIDGen();
                     patient.id = newId;
+                    //after changing the id enter the patient
                     collection.insertOne(patient, function(err) {
                         if (err) throw err;
                         resolve("Patient added correctly");
                     });
             }
+        }else{
+            reject("Entered patient is not valid")
         }
         });
     }
 
-    static async update(db,id,bday,dday,ssn,passport,prefix='',first,last,suffix='',maiden='',martial='',race,ethnicity,gender,birthplace='',address,city,county,zip,lat=0,low=0,healthExpenses=0,healthCoverage=0){
+    static async update(db,id,bday=,dday='',ssn='',passport,prefix='',first,last,suffix='',maiden='',martial='',race,ethnicity,gender,birthplace='',address,city,county,zip,lat=0,low=0,healthExpenses=0,healthCoverage=0){
         return new Promise(async function(resolve,reject){
             let collection = await _get_patients_collection(db);
             let findP = await collection.findOne({id:id},{upsert: true});
