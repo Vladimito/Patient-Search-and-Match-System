@@ -14,9 +14,28 @@ const options = {
     projection: {_id:0,id:1, bday:1,dday:1, ssn:1,drivers:1,passport:1,prefix:1,first:1,last:1,maiden:1,martial:1,race:1,ethnicity:1,gender:1,birthplace:1,address:1,city:1,state:1,county:1,zip:1,lat:1,low:1,healthExpenses:1,healthCoverage:1},
 };
 
+
+function patientIDGen() {
+    var len = 36;
+    const hex = '0123456789abcdef';
+    let PID = '';
+    for(let i =0;i < len;++i){
+        if(i===9||i===14||i===19||i===24){
+            PID += '-';
+        }else if(i<=13 || i<=18){
+            PID += hex.charAt(Math.floor(Math.random() * hex.length));
+        }else{
+            PID += hex.charAt(Math.floor(Math.random() * hex.length));
+        }
+    }
+    return PID;
+}
+
+
+
 //This function will read patients.csv and convert it into a JSON array
 //Then it will load it into the database
-//Will be used when testing is started
+//Unused at the moment, will implement fully if needed
 async function _loadDB(db){
     let jsonArray = await ctoj().fromFile(csvPath); //converts contents to jsonArray
     let collection = await _get_patients_collection(db); //gets the patientcollection
@@ -96,21 +115,34 @@ class Patient {
         return validation.passes();
     };
 
+    
     //Method that saves a patient into the database
     //takes the data from the patient object that calls the method
     //and the places it inside the patient database
     async save(db) {
         var patient = this;
         return new Promise(async function (resolve, reject){
+            let collection = await _get_patients_collection(db);
+            let findP = await collection.findOne({id:id},{upsert:true});
             if (patient.isValid()) {
-                let collection = await _get_patients_collection(db);
-                collection.insertOne(patient, function(err) {
-                    if (err) throw err;
-                    resolve("Patient added correctly");
-                });
+                if(findP === null || findP === undefined){
+                    collection.insertOne(patient, function(err) {
+                        if (err) throw err;
+                        resolve("Patient added correctly");
+                    });
+                }else{
+                    newId = patientIDGen();
+                    patient.id = newId;
+                    collection.insertOne(patient,function(err)) {
+                        if(err) throw err;
+                        resolve("Patient added correctly");
+                    }
+                }
             }else{
                 reject("Data invalid; patient was not added");
             }
+
+
         });
     }
 
