@@ -7,12 +7,9 @@ var db;
 async function connectToDB() {
     try {
         await client.connect();
-        db = client.db('PATIENT_DATABASE');
-		var dbo = client.db("PATIENT_DATABASE");
-		 dbo.collection("patients").find({}).toArray(function(err, result) {
-		if (err) throw err;
- });  
+        let db = client.db('patients');
         console.log("Connected successfully to mongoDB"); 		
+        return db;
     } catch (err) {
         throw err;
     } 

@@ -1,7 +1,7 @@
 const express = require("express")
 const port = 3000
 const system_router = require("./router/router.js")
-const mongo = require('./utils/db');
+const mongo = require('./utils/database');
 
 
 var db;

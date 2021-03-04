@@ -96,7 +96,7 @@ class Patient {
             last: 'required|string',
             suffix: 'string',
             maiden: 'string',
-            martial: 'string',
+            marital: 'string',
             race: 'required|string',
             ethnicity: 'required|string',
             gender: 'required|string|max:1',
@@ -146,7 +146,7 @@ class Patient {
         });
     }
 
-    static async update(db,id,bday,dday='',ssn='',passport,prefix='',first,last,suffix='',maiden='',martial='',race,ethnicity,gender,birthplace='',address,city,county,zip,lat=0,low=0,healthExpenses=0,healthCoverage=0){
+    static async update(db,id,bday,dday='',ssn='',passport,prefix='',first,last,suffix='',maiden='',marital='',race,ethnicity,gender,birthplace='',address,city,county,zip,lat=0,low=0,healthExpenses=0,healthCoverage=0){
         return new Promise(async function(resolve,reject){
             let collection = await _get_patients_collection(db);
             let findP = await collection.findOne({id:id},{upsert: true});
