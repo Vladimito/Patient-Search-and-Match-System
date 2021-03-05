@@ -176,6 +176,8 @@ class Patient {
         });
     }
 
+    //Method that finds a patient with a specific id
+	//finds a patient based on their id and returns their information
     static async getPatientByID(db, id) {
         var id_get = id;
         return new Promise(async function(resolve, reject){
@@ -193,6 +195,7 @@ class Patient {
         });
     }
 
+    //Method that returns a list of all patients
     static async getPatients(db) {
         return new Promise(async function(resolve, reject){
             var patientList = [];
