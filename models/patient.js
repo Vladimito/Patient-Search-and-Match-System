@@ -1,4 +1,6 @@
 const Validator = require("validatorjs");
+const {json} = require("body-parser");
+const {ObjectId} = require("mongodb");
 const ctoj = require("csvtojson/v2"); //imports to convert csv dataset into json
 const csvPath = 'csv/patient.csv';
 
@@ -120,29 +122,35 @@ class Patient {
     //and the places it inside the patient database
     async save(db) {
         var patient = this;
-        return new Promise(async function (resolve, reject){
-            let collection = await _get_patients_collection(db); 
-            let findP = await collection.find({id:patient.id},{upsert:true}); //check if there's a patient with that ID
-            //debug line console.log(findP);
-            if (patient.isValid()) { //check if the patient's entered attributes are valid
-                if(findP === null || findP === undefined){ //if the patient is valid enter them into the database
-                    collection.insertOne(patient, function(err) {
-                        if (err) throw err;
-                        resolve("Patient added correctly");
+        console.log('patient.id: ' + patient.id);
+        return new Promise(async function(resolve, reject) {
+            let collection = await _get_patients_collection(db);
+            console.log("collection: " + collection); //debug line
+            if(patient.isValid() === true){ //checks if the patient is valid
+                let findP = collection.findOne({id:patient.id},options); //checks if there already exists a patient with that ID
+                if(findP === null || findP === undefined){ //if there doesn't exist a patient with that id insert
+                    
+                    collection.insertOne(patient, (err,obj) =>{
+                        if(err) reject(err);
+                        console.log("Inserting.."); //lets the server that a book is being inserted
+                        console.log("A document was inserted in the database"); 
+                        resolve("Patient added correctly")
                     });
                 }else{
-                    //Otherwise generate a new id and change the id 
-                    newId = patientIDGen();
+                    let newId = patientIDGen(); //generates a new id if there already exists an id
                     patient.id = newId;
-                    //after changing the id enter the patient
-                    collection.insertOne(patient, function(err) {
-                        if (err) throw err;
-                        resolve("Patient added correctly");
+                    console.log('patient.id after changing' + patient.id);
+                    
+                    collection.insertOne(patient,(err,obj)=>{
+                        if(err) reject(err);
+                        console.log("Inserting..");
+                        console.log("A document was inserted in the database");
+                        resolve("Patient added correctly")
                     });
+                }
+            }else{
+                reject("Cannot insert an invalid patient into the database")
             }
-        }else{
-            reject("Entered patient is not valid")
-        }
         });
     }
 

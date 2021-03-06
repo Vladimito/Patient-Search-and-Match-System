@@ -7,7 +7,7 @@ var db;
 async function connectToDB() {
     try {
         await client.connect();
-        let db = client.db('patients');
+        let db = client.db('pmsDev');
         console.log("Connected successfully to mongoDB"); 		
         return db;
     } catch (err) {
@@ -20,7 +20,11 @@ async function getDb() {
 }
 
 async function closeDBConnection(){
-    await client.close();
+    try{
+        await client.close();
+    }catch(err){
+        throw err;
+    }
 };
 
 
