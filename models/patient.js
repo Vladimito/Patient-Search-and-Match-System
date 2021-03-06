@@ -11,10 +11,10 @@ async function _get_patients_collection (db){
 };
 
 const options = {
-    projection: {_id:0,id:1, bday:1,dday:1, ssn:1,drivers:1,passport:1,prefix:1,first:1,last:1,maiden:1,martial:1,race:1,ethnicity:1,gender:1,birthplace:1,address:1,city:1,state:1,county:1,zip:1,lat:1,low:1,healthExpenses:1,healthCoverage:1},
+    projection: {_id:0,id:1, bday:1,dday:1, ssn:1,drivers:1,passport:1,prefix:1,first:1,last:1,maiden:1,marital:1,race:1,ethnicity:1,gender:1,birthplace:1,address:1,city:1,state:1,county:1,zip:1,lat:1,low:1,healthExpenses:1,healthCoverage:1},
 };
 
-
+//Generates a random patient ID
 function patientIDGen() {
     var len = 36;
     const hex = '0123456789abcdef';
@@ -22,9 +22,7 @@ function patientIDGen() {
     for(let i =0;i < len;++i){
         if(i===9||i===14||i===19||i===24){
             PID += '-';
-        }else if(i<=13 || i<=18){
-            PID += hex.charAt(Math.floor(Math.random() * hex.length));
-        }else{
+        }else if(i<=13 || i<=18 || i <= 36){
             PID += hex.charAt(Math.floor(Math.random() * hex.length));
         }
     }
@@ -53,7 +51,7 @@ async function _loadDB(db){
 }
 
 class Patient {
-    constructor(id, bday,dday, ssn,drivers,passport,prefix,first,last,suffix,maiden,martial,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,low,healthExpenses,healthCoverage) {
+    constructor(id, bday,dday, ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,low,healthExpenses,healthCoverage) {
         this.id = id
         this.bday = bday
         this.dday = dday
@@ -65,7 +63,7 @@ class Patient {
         this.last = last
         this.suffix = suffix
         this.maiden = maiden
-        this.martial = martial
+        this.marital = marital
         this.race = race
         this.ethnicity = ethnicity
         this.gender = gender
@@ -103,6 +101,7 @@ class Patient {
             birthplace: 'required|string',
             address: 'required|string',
             city: 'required|string',
+            state: 'required|string',
             county: 'required|string',
             zip: 'required|string|max:9',
             lat: 'integer',
@@ -123,7 +122,8 @@ class Patient {
         var patient = this;
         return new Promise(async function (resolve, reject){
             let collection = await _get_patients_collection(db); 
-            let findP = await collection.findOne({id:id},{upsert:true}); //check if there's a patient with that ID
+            let findP = await collection.find({id:patient.id},{upsert:true}); //check if there's a patient with that ID
+            //debug line console.log(findP);
             if (patient.isValid()) { //check if the patient's entered attributes are valid
                 if(findP === null || findP === undefined){ //if the patient is valid enter them into the database
                     collection.insertOne(patient, function(err) {
