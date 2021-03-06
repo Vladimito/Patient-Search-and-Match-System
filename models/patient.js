@@ -127,10 +127,10 @@ class Patient {
             let collection = await _get_patients_collection(db);
             console.log("collection: " + collection); //debug line
             if(patient.isValid() === true){ //checks if the patient is valid
-                let findP = collection.findOne({id:patient.id},options); //checks if there already exists a patient with that ID
-                if(findP === null || findP === undefined){ //if there doesn't exist a patient with that id insert
+                let findP = await collection.findOne({id:patient.id},options); //checks if there already exists a patient with that ID
+                if(await findP === null || await findP === undefined){ //if there doesn't exist a patient with that id insert
                     
-                    collection.insertOne(patient, (err,obj) =>{
+                    await collection.insertOne(patient, (err,obj) =>{
                         if(err) reject(err);
                         console.log("Inserting.."); //lets the server that a book is being inserted
                         console.log("A document was inserted in the database"); 
@@ -141,7 +141,7 @@ class Patient {
                     patient.id = newId;
                     console.log('patient.id after changing' + patient.id);
                     
-                    collection.insertOne(patient,(err,obj)=>{
+                    await collection.insertOne(patient,(err,obj)=>{
                         if(err) reject(err);
                         console.log("Inserting..");
                         console.log("A document was inserted in the database");

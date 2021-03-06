@@ -6,21 +6,14 @@ const mongo = require('../utils/database');
 var db;
 
 before(async function() {
-    try{
-        db = await mongo.connectToDB();
-    }catch(err) {
-        throw err;
-    }
+
+    db = await mongo.connectToDB();
+
 });
 
 after(async function() {
-    try{
-        mongo.closeDBConnection();
-    }catch(err){
-        throw err;
-    }
+    await mongo.closeDBConnection();
 });
-
 
 describe('Testing the Patient API', async function(){
     describe('Testing the Patient Model - Simple cases', async function(){
@@ -46,7 +39,7 @@ describe('Testing the Patient API', async function(){
         let county ='Middlesex';
         let zip = '02155';
         let lat = 42;
-        let low = -71;
+        let low = 71;
         let healthExpenses = 44232;
         let healthCoverage = 1033;
         it('Success 1 - Test the insertion of a valid patient(Patient.save) Sucess Msg test', function(){
