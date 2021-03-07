@@ -2,6 +2,7 @@ var assert = require('assert');
 const Patient = require('../models/patient.js');
 const request = require('request');
 const mongo = require('../utils/database');
+const { interfaces } = require('mocha');
 
 var db;
 
@@ -14,9 +15,10 @@ before(async function() {
 
 after(async function() {
     //clears the db after every test
-    console.log("dropping collection");
+    //Mainly used for debugging
+    console.log("removing patients");
     const patients = db.collection('patients');
-    patients.drop
+    await patients.deleteMany({});
     await mongo.closeDBConnection();
 });
 
@@ -54,13 +56,13 @@ describe('Testing the Patient API', async function(){
             .catch(result => console.log("Error: " + result))
         });
         it('Test the insertion of an invalid patient(Patient.save)', async function(){
-            let newZip = '021556';
+            let newZip = '02155674';
             let patient2 = new Patient(id,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,newZip,last,lon,healthExpenses,healthCoverage);
             savePromise = patient2.save(db);
             await savePromise.then(result => console.log(result))
             .catch(result => assert.strictEqual(result,"Cannot insert an invalid patient into the database"));      
         });
-        it('Testing the insertion of a patient with the same ID as an existing one(Patient.save)', async function(){
+        it('Testing the insertion of a patient with the same ID as an existing one(Patient.save) - Patient should be inserted', async function(){
             let bday = '2014-08-11';
             let dday = ' ';
             let ssn = '999-85-3751';
@@ -86,17 +88,36 @@ describe('Testing the Patient API', async function(){
 
             let patient3 = new Patient(id,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,lon,healthExpenses,healthCoverage);
             savePromise = patient3.save(db);
-            await savePromise.then(result => assert.strictEqual(result, "Patient added correctly"))
+            await savePromise.then(result => assert.strictEqual(result, "Patient assigned new ID added correctly"))
             .catch(result => console.log("Error: " + result))
         });
+        let ogid = 'b132f06d-2836-0e70-b691-f67b381fcfb0';
         let nid = '09fae2f3e-576e-2c57-c4c5-f62b6e19da3';
         let newHealthExpen = 23593;
         let newAdd = '580 Quitzon Avenue Suite 58';
         let newCity = 'Concord';
         let newZip2 = '56773';
-        it('Testing the update of patient 1 ',async function(){
-            updatePromise = Patient.update(db,id,nid,bday,ssn,first,last,race,ethnicity,gender,birthplace,newAdd,newCity,county,newZip2,lat,lon,newHealthExpen,healthCoverage);
+        it('Testing the update of patient 1\'s information ',async function(){
+            updatePromise = Patient.update(db,ogid,nid,bday,ssn,first,last,race,ethnicity,gender,birthplace,newAdd,newCity,county,newZip2,lat,lon,newHealthExpen,healthCoverage);
             await updatePromise.then(result => assert.strictEqual(result,"{msg: 'Document was correctly updated'}"))
+            .catch(result => console.log("Error: " + result))
+        });
+        it('Testing if Patient.update() will reject an invalid ID', async function(){
+            let pupId = '7951157f4-374b-64fa-8e2e-b12c19cb077';
+            updatePromise = Patient.update(db,ogid,pupId,bday,ssn,first,last,race,ethnicity,gender,birthplace,newAdd,newCity,county,newZip2,lat,lon,newHealthExpen,healthCoverage);
+            await updatePromise.then(result => console.log("Result: " + result))
+            .catch(result => assert.strictEqual(result, "{msg: 'Cannot update document that doesn't exist'}"))
+        });
+        it('Testing Patient.getPatientByID() - should properly send success message',async function(){
+            let expected = '[{"id":"09fae2f3e-576e-2c57-c4c5-f62b6e19da3","bday":"2019-08-09","dday":"999-75-3876","ssn":"Merna69","drivers":"Howell11947","passport":"white","prefix":"nonhispanic","first":"F","last":"Winthrop  Massachusetts  US","maiden":"Concord","marital":"Middlesex","race":"56773","ethnicity":42,"gender":71,"birthplace":23593,"address":1033,"city":null,"state":"Massachusetts","county":null,"zip":null,"lat":0,"lon":0,"healthExpenses":0,"healthCoverage":0}]';
+            getByIDProm = Patient.getPatientByID(db,nid);
+            await getByIDProm.then(result => assert.strictEqual(result, expected))
+            .catch(result => console.log("Error: " + result));
+        })
+
+        it('Testing deletion of patient from database Patient.delete()', async function(){
+            deleteProm = Patient.delete(db,ogid);
+            await deleteProm.then(result => assert.strictEqual(result, "{msg: 'The patient was deleted from the database'}"))
             .catch(result => console.log("Error: " + result))
         });
     });

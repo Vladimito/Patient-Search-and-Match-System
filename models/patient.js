@@ -135,6 +135,7 @@ class Patient {
                         resolve("Patient added correctly")
                     });
                 }else{
+                    console.log("Same ID detected, assigning new ID"); //debug line
                     let newId = patientIDGen(); //generates a new id if there already exists an id
                     patient.id = newId;
                     //console.log('patient.id after changing' + patient.id);
@@ -143,7 +144,7 @@ class Patient {
                         if(err) reject(err);
                         console.log("Inserting..");
                         console.log("A document was inserted in the database");
-                        resolve("Patient added correctly")
+                        resolve("Patient assigned new ID added correctly")
                     });
                 }
             }else{
@@ -152,7 +153,7 @@ class Patient {
         });
     }
 
-    //Updates patient information
+    //Updates patient information if something is not entered it is assumed that the value of the attribute is an empty string/0
     //Current implementation is not all that efficient at the moment
     static async update(db,ogid,newid,bday,dday='',ssn='',drivers = '',passport='',prefix='',first,last,suffix='',maiden='',marital='',race,ethnicity,gender,birthplace='',address,city,county,zip,lat=0,lon=0,healthExpenses=0,healthCoverage=0){
         return new Promise(async function(resolve,reject){
@@ -161,7 +162,7 @@ class Patient {
             if(findP != null || findP != undefined){
                 collection.updateOne({id: ogid},
                     {$set: {"id": newid, "bday": bday,"dday": dday,"ssn":ssn,"drivers":drivers,"passport":passport,"prefix": prefix,"first": first,"last": last,"suffix": suffix,"maiden": maiden,"marital": marital,"race": race,"ethnicity":ethnicity,"gender":gender,"birthplace":birthplace,"address":address,"city":city,"county":county,"zip":zip,"lat": lat,"lon": lon,"healthExpenses": healthExpenses,"healthCoverage": healthCoverage}})
-                    console.log("Document with id = " + id + "was updated");
+                    console.log("Document with id = " + ogid + "was updated");
                     resolve("{msg: 'Document was correctly updated'}")
     
             }else{
