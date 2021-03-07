@@ -193,9 +193,9 @@ class Patient {
             var err,obj;
             let collection = await _get_patients_collection(db);
             let matchedPatient = await collection.find({id: id_get},options).toArray((err,obj));
-            console.log("matchedPatient before first stringify: " + matchedPatient); //debugging line
+            //console.log("matchedPatient before first stringify: " + matchedPatient); //debugging line
             if(matchedPatient != null || matchedPatient != undefined){
-                console.log("Found patient: " + JSON.stringify(matchedPatient));
+                //console.log("Found patient: " + JSON.stringify(matchedPatient));
                 resolve(JSON.stringify(matchedPatient))
             }else{
                 console.log("Could not find a patient with that ID");
