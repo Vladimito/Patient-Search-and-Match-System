@@ -215,7 +215,7 @@ class Patient {
                     console.log("Patient: " + patient);
                     patientList.push(patient);
                 })
-                console.log("patientList: " + patientList);
+                //console.log("patientList: " + JSON.stringify(patientList));
                 resolve(JSON.stringify(patientList));
            }else{
                console.log("Database is empty");
