@@ -42,12 +42,19 @@ describe('Testing the Patient API', async function(){
         let low = 71;
         let healthExpenses = 44232;
         let healthCoverage = 1033;
-        it('Success 1 - Test the insertion of a valid patient(Patient.save) Sucess Msg test', function(){
-            let newPatient = new Patient(nid,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,low,healthExpenses,healthCoverage);
-            savePromise = newPatient.save(db);
-            console.log("patient")
-            savePromise.then(result => assert.strictEqual(result, "Patient added correctly"))
+        it('Success 1 - Test the insertion of a valid patient(Patient.save) Success Msg test', async function(){
+            let patient1 = new Patient(nid,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,low,healthExpenses,healthCoverage);
+            savePromise = patient1.save(db);
+            await savePromise.then(result =>  assert.strictEqual(result, "Patient added correctly"))
             .catch(result => console.log("Error: " + result))
+        });
+        it('Success 2 - Test the insertion of an invalid patient(Patient.save) Success Msg test', async function(){
+            let newZip = '021556';
+            let patient2 = new Patient(nid,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,newZip,last,low,healthExpenses,healthCoverage);
+            savePromise = patient2.save(db);
+            await savePromise.then(result => assert.strictEqual(result,"Patient added correctly"))
+            .catch(result => console.log("Error: " + result));
+            
         });
 
     });
