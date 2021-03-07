@@ -6,8 +6,10 @@ var db;
 // Establish a connection to the database
 async function connectToDB() {
     try {
+        //Connect client to server
         await client.connect();
-        let db = client.db('pmsDev');
+        //Name db patients
+        let db = client.db('patients');
         console.log("Connected successfully to mongoDB"); 		
         return db;
     } catch (err) {

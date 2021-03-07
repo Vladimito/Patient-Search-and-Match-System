@@ -1,6 +1,4 @@
 const Validator = require("validatorjs");
-const {json} = require("body-parser");
-const {ObjectId} = require("mongodb");
 const ctoj = require("csvtojson/v2"); //imports to convert csv dataset into json
 const csvPath = 'csv/patient.csv';
 
@@ -13,7 +11,7 @@ async function _get_patients_collection (db){
 };
 
 const options = {
-    projection: {_id:0,id:1, bday:1,dday:1, ssn:1,drivers:1,passport:1,prefix:1,first:1,last:1,maiden:1,marital:1,race:1,ethnicity:1,gender:1,birthplace:1,address:1,city:1,state:1,county:1,zip:1,lat:1,low:1,healthExpenses:1,healthCoverage:1},
+    projection: {_id:0,id:1, bday:1,dday:1, ssn:1,drivers:1,passport:1,prefix:1,first:1,last:1,maiden:1,marital:1,race:1,ethnicity:1,gender:1,birthplace:1,address:1,city:1,state:1,county:1,zip:1,lat:1,lon:1,healthExpenses:1,healthCoverage:1},
 };
 
 //Generates a random patient ID
@@ -53,7 +51,7 @@ async function _loadDB(db){
 }
 
 class Patient {
-    constructor(id, bday,dday, ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,low,healthExpenses,healthCoverage) {
+    constructor(id, bday,dday, ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,lon,healthExpenses,healthCoverage) {
         this.id = id
         this.bday = bday
         this.dday = dday
@@ -76,7 +74,7 @@ class Patient {
         this.county = county
         this.zip = zip
         this.lat = lat
-        this.low = low
+        this.lon = lon
         this.healthExpenses = healthExpenses
         this.healthCoverage = healthCoverage
     }
@@ -105,11 +103,11 @@ class Patient {
             city: 'required|string',
             state: 'required|string',
             county: 'required|string',
-            zip: 'required|string|max:4',
-            lat: 'integer',
-            low: 'integer',
-            healthExpenses: 'integer',
-            healthCoverage: 'integer'
+            zip: 'required|string|max:5',
+            lat: 'numeric',
+            lon: 'numeric',
+            healthExpenses: 'numeric',
+            healthCoverage: 'numeric'
 
         }
         const validation = new Validator(this, rules);
@@ -122,10 +120,10 @@ class Patient {
     //and the places it inside the patient database
     async save(db) {
         var patient = this;
-        console.log('patient.id: ' + patient.id);
+        //console.log('patient.id: ' + patient.id);
         return new Promise(async function(resolve, reject) {
             let collection = await _get_patients_collection(db);
-            console.log("collection: " + collection); //debug line
+            //console.log("collection: " + collection); //debug line
             if(patient.isValid() === true){ //checks if the patient is valid
                 let findP = await collection.findOne({id:patient.id},options); //checks if there already exists a patient with that ID
                 if(await findP === null || await findP === undefined){ //if there doesn't exist a patient with that id insert
@@ -139,7 +137,7 @@ class Patient {
                 }else{
                     let newId = patientIDGen(); //generates a new id if there already exists an id
                     patient.id = newId;
-                    console.log('patient.id after changing' + patient.id);
+                    //console.log('patient.id after changing' + patient.id);
                     
                     await collection.insertOne(patient,(err,obj)=>{
                         if(err) reject(err);
@@ -154,13 +152,15 @@ class Patient {
         });
     }
 
-    static async update(db,id,bday,dday='',ssn='',passport,prefix='',first,last,suffix='',maiden='',marital='',race,ethnicity,gender,birthplace='',address,city,county,zip,lat=0,low=0,healthExpenses=0,healthCoverage=0){
+    //Updates patient information
+    //Current implementation is not all that efficient at the moment
+    static async update(db,ogid,newid,bday,dday='',ssn='',drivers = '',passport='',prefix='',first,last,suffix='',maiden='',marital='',race,ethnicity,gender,birthplace='',address,city,county,zip,lat=0,lon=0,healthExpenses=0,healthCoverage=0){
         return new Promise(async function(resolve,reject){
             let collection = await _get_patients_collection(db);
-            let findP = await collection.findOne({id:id},{upsert: true});
+            let findP = await collection.findOne({id:ogid},{upsert: true});
             if(findP != null || findP != undefined){
-                collection.updateOne({id: id},
-                    {$set: {"id": id, "bday": bday,"dday": dday,"ssn":ssn,"passport":passport,first,last,race,ethnicity,gender,address,city,county,zip}})
+                collection.updateOne({id: ogid},
+                    {$set: {"id": newid, "bday": bday,"dday": dday,"ssn":ssn,"drivers":drivers,"passport":passport,"prefix": prefix,"first": first,"last": last,"suffix": suffix,"maiden": maiden,"marital": marital,"race": race,"ethnicity":ethnicity,"gender":gender,"birthplace":birthplace,"address":address,"city":city,"county":county,"zip":zip,"lat": lat,"lon": lon,"healthExpenses": healthExpenses,"healthCoverage": healthCoverage}})
                     console.log("Document with id = " + id + "was updated");
                     resolve("{msg: 'Document was correctly updated'}")
     
