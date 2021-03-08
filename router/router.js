@@ -3,8 +3,9 @@ const router  = express.Router()
 
 const patientController = require("../controllers/patients.js")
 
-router.get("/", patientController.all)
+router.post("/",patientController.create)
+router.get("/all", patientController.all)
 router.get("/:id", patientController.getOne)
-router.get('/delete/:id', patientController.deleteOne)
-router.post('/patients',patientController.create)
+router.get("/delete/:id", patientController.deleteOne)
+router.put("/update/:id",patientController.updateOne)
 module.exports = router

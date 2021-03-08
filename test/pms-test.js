@@ -92,7 +92,6 @@ describe('Testing the Patient API', async function(){
             let county = 'Middlesex';
             let zip = '02342';
             let lat = 42;
-            let lon
 
             let patient3 = new Patient(id,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,lon,healthExpenses,healthCoverage);
             savePromise = patient3.save(db);
@@ -176,17 +175,15 @@ describe('Testing the Patient API', async function(){
                     healthExpenses: 454843,
                     healthCoverage: 2674  
                 }
-
                 request.post({
                     headers: {'content-type': 'application/json'},
                     url: myurl+'/patients',
                     body: JSON.stringify(patient1)
-                },function(error, response, body){
-                    console.log("Body: " + body);
-                    if(error) console.dir(error);
-                    assert.strictEqual(JSON.parse(body).msg,"Patient added correctly");
+                }, function(error, response,body){
+                    if(error) console.log(error);
+                    console.log(body);
                     done();
-                });
+                })
             });
 
         });

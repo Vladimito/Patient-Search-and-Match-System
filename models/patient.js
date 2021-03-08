@@ -1,7 +1,7 @@
 //
 const Validator = require("validatorjs");
 //const ctoj = require("csvtojson/v2"); //imports to convert csv dataset into json
-const csvPath = 'csv/patient.csv';
+//const csvPath = 'csv/patient.csv';
 
 async function _get_patients_collection (db){
     try{

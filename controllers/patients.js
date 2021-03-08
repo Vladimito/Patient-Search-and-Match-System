@@ -1,16 +1,14 @@
 const Patient = require("../models/patient.js");
 
-
 async function get_collection(db){
 	return await db.collection('patients');
 }
 
 const create = async(req,res) =>{
 	console.log("Running create");
-	const new_patient = new Patient(req.body.id,req.body.bday,req.body.dday,req.body.ssn,req.body.drivers,req.body.passport,req.body.prefix,req.body.first,req.body.last,req.body.suffix,req.body.maiden,req.body.marital,req.body.race,rew.body.ethnicity,req.body.gender,req.body.birthplace,req.body.address,req.body.city,req.body.state,req.body.county,req.body.zip,req.body.lat,req.body.lon,parseInt(req.body.healthExpenses),parseInt(req.body.healthCoverage));
+	const new_patient = new Patient(req.body.id,req.body.bday,req.body.dday,req.body.ssn,req.body.drivers,req.body.passport,req.body.prefix,req.body.first,req.body.last,req.body.suffix,req.body.maiden,req.body.marital,req.body.race,req.body.ethnicity,req.body.gender,req.body.birthplace,req.body.address,req.body.city,req.body.state,req.body.county,req.body.zip,parseInt(req.body.lat),parseInt(req.body.lon),parseInt(req.body.healthExpenses),parseInt(req.body.healthCoverage));
 	let db = req.db;
-	let collection = await get_collection(db);
-	new_patient.save(collection).then(obj =>{
+	new_patient.save(db).then(obj =>{
 		res.send(obj);
 	}).catch(obj => {
 		res.send(obj);
@@ -45,7 +43,7 @@ const deleteOne = async (req, res) => {
 	const patientID = req.params.id;
 	let db = req.db;
 	try{
-		let msg = await Patient.delete(db, book_id);
+		let msg = await Patient.delete(db, patientID);
 		res.send(msg);	
 	}catch(err){
 		res.send('There was an error while deleting your Book. (err:'+err+')');

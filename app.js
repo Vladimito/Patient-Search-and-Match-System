@@ -1,5 +1,5 @@
 const express = require("express");
-const router = require("./router/router");
+//const router = require("./router/router");
 const port = 3000
 const system_router = require("./router/router")
 const mongo = require("./utils/database");
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 });
 app.use(express.json())
 
-app.use("/system", system_router)
+app.use("/patients", system_router)
 
 server = app.listen(port, () => {
 	console.log('Example app listening at http://localhost:%d', port);
