@@ -31,7 +31,16 @@ function patientIDGen() {
 }
 
 
-
+function _isStringified(str) {
+    try{
+        JSON.parse(str);
+    }catch(e){
+        console.log("Not valid JSON string");
+        return false;
+    }
+    console.log("Valid JSON string");
+    return true;
+}
 //This function will read patients.csv and convert it into a JSON array
 //Then it will load it into the database
 //Unused at the moment, will implement fully if needed
@@ -121,6 +130,7 @@ class Patient {
     //and the places it inside the patient database
     async save(db) {
         var patient = this;
+
         //console.log('patient.id: ' + patient.id);
         return new Promise(async function(resolve, reject) {
             let collection = await _get_patients_collection(db);
@@ -156,7 +166,7 @@ class Patient {
 
     //Updates patient information if something is not entered it is assumed that the value of the attribute is an empty string/0
     //Current implementation is not all that efficient at the moment
-    static async update(db,ogid,newid,bday,dday='',ssn='',drivers = '',passport='',prefix='',first,last,suffix='',maiden='',marital='',race,ethnicity,gender,birthplace='',address,city,county,zip,lat=0,lon=0,healthExpenses=0,healthCoverage=0){
+    static async update(db,ogid,newid,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,county,zip,lat,lon,healthExpenses,healthCoverage){
         return new Promise(async function(resolve,reject){
             let collection = await _get_patients_collection(db);
             let findP = await collection.findOne({id:ogid},{upsert: true});

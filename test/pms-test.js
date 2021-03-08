@@ -92,6 +92,7 @@ describe('Testing the Patient API', async function(){
             let county = 'Middlesex';
             let zip = '02342';
             let lat = 42;
+            let lon
 
             let patient3 = new Patient(id,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,lon,healthExpenses,healthCoverage);
             savePromise = patient3.save(db);
@@ -105,7 +106,7 @@ describe('Testing the Patient API', async function(){
         let newCity = 'Concord';
         let newZip2 = '56773';
         it('Testing the update of patient 1\'s information ',async function(){
-            updatePromise = Patient.update(db,ogid,nid,bday,ssn,first,last,race,ethnicity,gender,birthplace,newAdd,newCity,county,newZip2,lat,lon,newHealthExpen,healthCoverage);
+            updatePromise = Patient.update(db,ogid,nid,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,newAdd,newCity,county,newZip2,lat,lon,newHealthExpen,healthCoverage);
             await updatePromise.then(result => assert.strictEqual(result,"{msg: 'Document was correctly updated'}"))
             .catch(result => console.log("Error: " + result))
         });
@@ -116,7 +117,7 @@ describe('Testing the Patient API', async function(){
             .catch(result => assert.strictEqual(result, "{msg: 'Cannot update document that doesn't exist'}"))
         });
         it('Testing Patient.getPatientByID() - should properly send success message',async function(){
-            let expected = '[{"id":"09fae2f3e-576e-2c57-c4c5-f62b6e19da3","bday":"2019-08-09","dday":"999-75-3876","ssn":"Merna69","drivers":"Howell11947","passport":"white","prefix":"nonhispanic","first":"F","last":"Winthrop  Massachusetts  US","maiden":"Concord","marital":"Middlesex","race":"56773","ethnicity":42,"gender":71,"birthplace":23593,"address":1033,"city":null,"state":"Massachusetts","county":null,"zip":null,"lat":0,"lon":0,"healthExpenses":0,"healthCoverage":0}]';
+            let expected = '[{"id":"09fae2f3e-576e-2c57-c4c5-f62b6e19da3","bday":"2019-08-09","dday":" ","ssn":"999-75-3876","drivers":" ","passport":" ","prefix":" ","first":"Merna69","last":"Howell11947","maiden":" ","marital":" ","race":"white","ethnicity":"nonhispanic","gender":"F","birthplace":"Winthrop  Massachusetts  US","address":"580 Quitzon Avenue Suite 58","city":"Concord","state":"Massachusetts","county":"Middlesex","zip":"56773","lat":42,"lon":71,"healthExpenses":23593,"healthCoverage":1033}]';
             getByIDProm = Patient.getPatientByID(db,nid);
             await getByIDProm.then(result => assert.strictEqual(result, expected))
             .catch(result => console.log("Error: " + result));
@@ -148,7 +149,7 @@ describe('Testing the Patient API', async function(){
         });
         describe('Testing Patient API - Complex Cases', function() {
             var myurl = 'http://localhost:3000';
-            it ('Testing POST/patient, Delete/patient/:id',function(done){
+           /* it ('Testing POST/patient, Delete/patient/:id',function(done){
                 let patient1 = {
                     id: '781d9cff-b412-da29-724b-fb8e92ad3f96',
                     bday: '1999-01-25',
@@ -175,16 +176,18 @@ describe('Testing the Patient API', async function(){
                     healthExpenses: 454843,
                     healthCoverage: 2674  
                 }
+
                 request.post({
                     headers: {'content-type': 'application/json'},
                     url: myurl+'/patients',
                     body: JSON.stringify(patient1)
-                }, function(error, response,body){
-                    if(error) console.log(error);
-                    console.log(body);
+                },function(error, response, body){
+                    console.log("Body: " + body);
+                    if(error) console.dir(error);
+                    assert.strictEqual(JSON.parse(body).msg,"Patient added correctly");
                     done();
-                })
-            });
+                });
+            });*/
 
         });
     });
