@@ -1,10 +1,10 @@
 const express = require('express')
 const router  = express.Router()
 
-const book_controller = require("../controllers/patients.js")
+const patientController = require("../controllers/patients.js")
 
-router.get("/", book_controller.all)
-router.get("/:id", book_controller.getOne)
-router.get('/delete/:id', book_controller.deleteOne)
-
+router.get("/", patientController.all)
+router.get("/:id", patientController.getOne)
+router.get('/delete/:id', patientController.deleteOne)
+router.get('/patients',patientController.create)
 module.exports = router

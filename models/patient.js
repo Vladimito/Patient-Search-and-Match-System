@@ -1,3 +1,4 @@
+//
 const Validator = require("validatorjs");
 const ctoj = require("csvtojson/v2"); //imports to convert csv dataset into json
 const csvPath = 'csv/patient.csv';
@@ -45,7 +46,7 @@ async function _loadDB(db){
             //The two console logs are mainly for debugging
             console.log("Inserting.."); 
             console.log('A document was inserted in the database');
-            resolve("{msg: 'Document correctlyed inserted into database'}")
+            resolve("{msg: 'Document correctly inserted into database'}")
         });
     });
 }
@@ -212,7 +213,7 @@ class Patient {
             let count = await collection.countDocuments({});
             if(count != null || count != undefined || count != 0){
                 await collection.find({},options).forEach(function(patient){
-                    console.log("Patient: " + patient);
+                    //console.log("Patient: " + patient); //debug line
                     patientList.push(patient);
                 })
                 //console.log("patientList: " + JSON.stringify(patientList));

@@ -136,8 +136,55 @@ describe('Testing the Patient API', async function(){
             await getAllProm.then(result => expect(result).to.have.lengthOf.above(0).and.to.be.a('string'))
             .catch(result => console.log(result))
         });
-        /*describe('Testing Patient API - Complex Cases', async function() {
+        if('Testing if database is removed that the proper rejection message will be sent', async function(){
+            console.log("removing patients");
+            const patients = db.collection('patients');
+            await patients.deleteMany({});
+            getAllProm = Patient.getPatients(db);
+            await getAllProm.then(result => console.log('Result: ' + result))
+            .catch(result => assert.strictEqual(result, "{msg: 'Cannot locate documents in an empty database'}"))
+
+        });
+        describe('Testing Patient API - Complex Cases', function() {
             var myurl = 'http://http://localhost:3000';
-        })*/
+            it ('Testing POST/patient, Delete/patient/:id',function(done){
+                let patient1 = {
+                    id: '781d9cff-b412-da29-724b-fb8e92ad3f96',
+                    bday: '1999-01-25',
+                    dday: ' ',
+                    ssn: '999-74-6077',
+                    drivers: 'S99915626',
+                    passport: 'X35923685X',
+                    prefix: 'Ms.',
+                    first: 'Doris153',
+                    last: 'Mertz280',
+                    suffix: ' ',
+                    maiden: ' ',
+                    marital: ' ',
+                    race: 'white',
+                    ethnicity: 'nonhispanic',
+                    gender: 'F',
+                    address: '1045 Beatty Lock Suite 9',
+                    city: 'Falmouth',
+                    state: 'Massachusetts',
+                    county: 'Barnstable',
+                    zip: '2540',
+                    lat: 41,
+                    lon: 70,
+                    healthExpenses: 454843,
+                    healthCoverage: 2674  
+                }
+                request.post({
+                    headers: {'content-type': 'application/json'},
+                    url: myurl+'/patients',
+                    body: patient1
+                },function(error, response, body){
+  
+                    done();
+                }
+                )
+            })
+
+        })
     });
 });
