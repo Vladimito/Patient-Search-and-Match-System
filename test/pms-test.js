@@ -29,6 +29,8 @@ after(async function() {
 
 
 describe('Testing the Patient API', async function(){
+    var savePass = JSON.stringify({msg: 'Patient was inserted correctly'});
+    var savePass2 = JSON.stringify({msg: 'Patient assigned new ID added correctly'});
     describe('Testing the Patient Model - Simple cases', async function(){
         let id = 'b132f06d-2836-0e70-b691-f67b381fcfb0';
         let bday = '2019-08-09';
@@ -58,7 +60,7 @@ describe('Testing the Patient API', async function(){
         it('Test the insertion of a valid patient(Patient.save)', async function(){
             let patient1 = new Patient(id,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,lon,healthExpenses,healthCoverage);
             savePromise = patient1.save(db);
-            await savePromise.then(result =>  assert.strictEqual(result, "Patient added correctly"))
+            await savePromise.then(result =>  assert.strictEqual(result,savePass))
             .catch(result => console.log("Error: " + result))
         });
         it('Test the insertion of an invalid patient(Patient.save)', async function(){
@@ -94,7 +96,7 @@ describe('Testing the Patient API', async function(){
 
             let patient3 = new Patient(id,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,lon,healthExpenses,healthCoverage);
             savePromise = patient3.save(db);
-            await savePromise.then(result => assert.strictEqual(result, "Patient assigned new ID added correctly"))
+            await savePromise.then(result => assert.strictEqual(result, savePass2))
             .catch(result => console.log("Error: " + result))
         });
         let ogid = 'b132f06d-2836-0e70-b691-f67b381fcfb0';
@@ -146,7 +148,7 @@ describe('Testing the Patient API', async function(){
 
         });
         describe('Testing Patient API - Complex Cases', function() {
-            var myurl = 'http://http://localhost:3000';
+            var myurl = 'http://localhost:3000';
             it ('Testing POST/patient, Delete/patient/:id',function(done){
                 let patient1 = {
                     id: '781d9cff-b412-da29-724b-fb8e92ad3f96',
@@ -174,17 +176,19 @@ describe('Testing the Patient API', async function(){
                     healthExpenses: 454843,
                     healthCoverage: 2674  
                 }
+
                 request.post({
                     headers: {'content-type': 'application/json'},
                     url: myurl+'/patients',
-                    body: patient1
+                    body: JSON.stringify(patient1)
                 },function(error, response, body){
-  
+                    console.log("Body: " + body);
+                    if(error) console.dir(error);
+                    assert.strictEqual(JSON.parse(body).msg,"Patient added correctly");
                     done();
-                }
-                )
-            })
+                });
+            });
 
-        })
+        });
     });
 });

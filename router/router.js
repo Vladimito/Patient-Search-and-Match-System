@@ -6,5 +6,5 @@ const patientController = require("../controllers/patients.js")
 router.get("/", patientController.all)
 router.get("/:id", patientController.getOne)
 router.get('/delete/:id', patientController.deleteOne)
-router.get('/patients',patientController.create)
+router.post('/patients',patientController.create)
 module.exports = router

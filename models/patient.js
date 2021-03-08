@@ -1,6 +1,6 @@
 //
 const Validator = require("validatorjs");
-const ctoj = require("csvtojson/v2"); //imports to convert csv dataset into json
+//const ctoj = require("csvtojson/v2"); //imports to convert csv dataset into json
 const csvPath = 'csv/patient.csv';
 
 async function _get_patients_collection (db){
@@ -133,7 +133,7 @@ class Patient {
                         if(err) reject(err);
                         console.log("Inserting.."); //lets the server that a book is being inserted
                         console.log("A document was inserted in the database"); 
-                        resolve("Patient added correctly")
+                        resolve(JSON.stringify({msg: 'Patient was inserted correctly'}))
                     });
                 }else{
                     console.log("Same ID detected, assigning new ID"); //debug line
@@ -145,7 +145,7 @@ class Patient {
                         if(err) reject(err);
                         console.log("Inserting..");
                         console.log("A document was inserted in the database");
-                        resolve("Patient assigned new ID added correctly")
+                        resolve(JSON.stringify({msg: 'Patient assigned new ID added correctly'}))
                     });
                 }
             }else{

@@ -1,7 +1,8 @@
-const express = require("express")
+const express = require("express");
+const router = require("./router/router");
 const port = 3000
-const system_router = require("./router/router.js")
-const mongo = require('./utils/database');
+const system_router = require("./router/router")
+const mongo = require("./utils/database");
 
 
 var db;
