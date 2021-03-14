@@ -6,8 +6,8 @@ input {
 
 .tab {
     overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
+    border: 2px solid Tomato;
+    background-color: #ffff66;
 }
   
 .tab button {
@@ -22,7 +22,7 @@ input {
 }
   
 .tab button:hover {
-    background-color: #ddd;
+    background-color: #ffcc00;
 }
   
 .tab button.active {
@@ -69,7 +69,6 @@ h1 {
 }
 
 p {
-  font-family: verdana;
   font-size: 15px;
   text-align: center;
   color: white;
