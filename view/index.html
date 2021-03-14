@@ -17,7 +17,7 @@
 	  
 	  <div id="add-patient-tab" class="tabcontent">
         <form>
-            <label for="add-name">First Name</label>
+            <div class="column"><label for="add-name">First Name</label>
             <input type="text" id="add-firstname" name="firstname">
 			<label for="add-name">Last Name</label>
             <input type="text" id="add-lasttname" name="lastname">
@@ -28,8 +28,8 @@
             <label for="add-address">Race</label>
             <input type="text" id="add-race" name="race">
 			<label for="add-address">Ethnic Origin</label>
-            <input type="text" id="add-ethnicity" name="ethnicity">
-			<label for="add-address">Sex</label>
+            <input type="text" id="add-ethnicity" name="ethnicity"></div>
+			<div class="column"><label for="add-address">Sex</label>
             <input type="text" id="add-gender" name="gender">
 			<label for="add-address">Birthplace</label>
             <input type="text" id="add-birthplace" name="birthplace">
@@ -40,7 +40,7 @@
 			<label for="add-address">County</label>
             <input type="text" id="add-county" name="county">
 			<label for="add-address">Postal Code</label>
-            <input type="text" id="add-zip" name="zip">
+            <input type="text" id="add-zip" name="zip"></div>
             <div>
                 <button id="add-patient-btn">Add</button>
                 <output id="add-out"></output>
