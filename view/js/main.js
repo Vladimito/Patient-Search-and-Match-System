@@ -1,7 +1,5 @@
 /**
- * This script will add the main behavior of the tabs.
- * The idea is that every time a tab is clicked, we identify the one that was clicked,
- * call show to this one, and hide to the others.
+ * This script allows for the tabs to be changed
  */
 $(document).ready(function(){
     function changeDivComponents(tab_element_clicked){
