@@ -5,9 +5,9 @@
 $(document).ready(function(){
     $("#btn-list-all").click(function(event){
         event.preventDefault();
-        $("#list-books").empty();
-        let tbl = '<table id="table-list"><tr><th>Surame</th><th>Given Name</th><th>SSN</th><th>Birthday</th><th>Date of Death</th><th>Drivers License</th><th>Passport</th><th>Race</th><th>Ethnicity</th><th>Gender</th><th>Birthplace</th><th>Address</th><th>City</th><th>County/Region</th><th>Postal Code</th><th>Expenses</th><th>Coverage</th></tr></table>';
-        $("#list-books").append(tbl);
+        $("#list-patients").empty();
+        let tbl = '<table id="table-list"><tr><th>Surname</th><th>Given Name</th><th>SSN</th><th>Birthday</th><th>Date of Death</th><th>Drivers License</th><th>Passport</th><th>Race</th><th>Ethnicity</th><th>Gender</th><th>Birthplace</th><th>Address</th><th>City</th><th>County/Region</th><th>Postal Code</th><th>Expenses</th><th>Coverage</th></tr></table>';
+        $("#list-patients").append(tbl);
         // Here we query the server-side
         $.ajax({
             url: '/system',
