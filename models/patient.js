@@ -222,10 +222,10 @@ class Patient {
             let collection = await _get_patients_collection(db);
             let count = await collection.countDocuments({});
             if(count != null || count != undefined || count != 0){
-                await collection.find({},options).forEach(function(patient){
-                    //console.log("Patient: " + patient); //debug line
-                    patientList.push(patient);
-                })
+                await collection.find({},options).toArray((err,items)=>{
+                    if(err) return reject(err);
+                    resolve({patients: items,msg:'client-side: The books were correctly retreived'})
+                });
                 //console.log("patientList: " + JSON.stringify(patientList));
                 resolve(JSON.stringify(patientList));
            }else{
