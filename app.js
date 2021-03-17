@@ -1,8 +1,7 @@
-const express = require("express");
-//const router = require("./router/router");
+const express = require("express")
 const port = 3000
-const system_router = require("./router/router")
-const mongo = require("./utils/database");
+const system_router = require("./router/router.js")
+const mongo = require('./utils/database');
 
 
 var db;
@@ -23,7 +22,8 @@ app.use((req, res, next) => {
 });
 app.use(express.json())
 
-app.use("/patients", system_router)
+app.use("/system", system_router)
+app.use(express.static(__dirname + '/view'));
 
 server = app.listen(port, () => {
 	console.log('Example app listening at http://localhost:%d', port);
