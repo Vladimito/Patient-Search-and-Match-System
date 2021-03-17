@@ -142,11 +142,11 @@ class Patient {
                     await collection.insertOne(patient, (err,obj) =>{
                         if(err) reject(err);
                         console.log("Inserting.."); //lets the server that a book is being inserted
-                        console.log("A document was inserted in the database"); 
-                        resolve(JSON.stringify({msg: 'Patient was inserted correctly'}))
+                        console.log("server-side: A document was inserted in the database"); 
+                        resolve({msg: 'client-side: The patient was correctly inserted in the database'});
                     });
                 }else{
-                    console.log("Same ID detected, assigning new ID"); //debug line
+                    console.log("server-side: Same ID detected, assigning new ID"); //debug line
                     let newId = patientIDGen(); //generates a new id if there already exists an id
                     patient.id = newId;
                     //console.log('patient.id after changing' + patient.id);
@@ -154,12 +154,12 @@ class Patient {
                     await collection.insertOne(patient,(err,obj)=>{
                         if(err) reject(err);
                         console.log("Inserting..");
-                        console.log("A document was inserted in the database");
+                        console.log("server-side: A document was inserted in the database");
                         resolve(JSON.stringify({msg: 'Patient assigned new ID added correctly'}))
                     });
                 }
             }else{
-                reject("Cannot insert an invalid patient into the database")
+                reject({msg: 'client-side: patient was not inserted'})
             }
         });
     }
@@ -174,10 +174,10 @@ class Patient {
                 collection.updateOne({id: ogid},
                     {$set: {"id": newid, "bday": bday,"dday": dday,"ssn":ssn,"drivers":drivers,"passport":passport,"prefix": prefix,"first": first,"last": last,"suffix": suffix,"maiden": maiden,"marital": marital,"race": race,"ethnicity":ethnicity,"gender":gender,"birthplace":birthplace,"address":address,"city":city,"county":county,"zip":zip,"lat": lat,"lon": lon,"healthExpenses": healthExpenses,"healthCoverage": healthCoverage}})
                     console.log("Document with id = " + ogid + "was updated");
-                    resolve("{msg: 'Document was correctly updated'}")
+                    resolve({msg: 'client-side: Document was correctly updated'})
     
             }else{
-                reject("{msg: 'Cannot update document that doesn't exist'}");
+                reject({msg: 'client-side: Cannot update document that doesn\'t exist'});
             }
         });
 
@@ -190,8 +190,8 @@ class Patient {
             let collection = await _get_patients_collection(db);
             collection.deleteOne({id: id_delete}, (err,obj) =>{
                 if(err) reject(err);
-                console.log("The patient with id = " + id_delete + ' was correctly deleted');
-                resolve("{msg: 'The patient was deleted from the database'}")
+                console.log("server-side: The patient with id = " + id_delete + ' was correctly deleted');
+                resolve({msg: 'client-side: The patient was deleted from the database'})
             });
         });
     }
@@ -209,8 +209,8 @@ class Patient {
                 //console.log("Found patient: " + JSON.stringify(matchedPatient));
                 resolve(JSON.stringify(matchedPatient))
             }else{
-                console.log("Could not find a patient with that ID");
-                reject("{msg: 'Could not find a patient with that ID'}")
+                console.log("server-side: Could not find a patient with that ID");
+                reject({msg: 'client-side: Could not find a patient with that ID'})
             }
         });
     }
@@ -230,7 +230,7 @@ class Patient {
                 resolve(JSON.stringify(patientList));
            }else{
                console.log("Database is empty");
-               reject("{msg: 'Cannot locate documents in an empty database'}")
+               reject({msg: 'Cannot locate documents in an empty database'})
            }
         });
     }
