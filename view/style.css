@@ -5,6 +5,7 @@ input {
 }
 
 .tab {
+    width: 100%;
     overflow: hidden;
     border: 2px solid Tomato;
     background-color: #ffff66;
@@ -59,19 +60,29 @@ th {
      color: white;
 }
 
+input[type=text], select {
+  background-color: #ffff99;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 body {
-  background-color: lightgreen;
+  background-color: white;
 }
 
 h1 {
-  color: white;
+  color: #009933;
   text-align: center;
+}
+
+h2 {
+  color: #009933;
 }
 
 p {
   font-size: 15px;
   text-align: center;
-  color: white;
+  color: #009933;
 }
 
 .column {
