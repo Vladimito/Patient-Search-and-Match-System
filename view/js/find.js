@@ -1,5 +1,3 @@
-//Code to be added later
-
 (document).ready(function(){
     /**
      * This method will be reused everytime a new event happens in this tab.
