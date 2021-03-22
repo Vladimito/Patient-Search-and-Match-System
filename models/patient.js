@@ -155,11 +155,11 @@ class Patient {
                         if(err) reject(err);
                         console.log("Inserting..");
                         console.log("server-side: A document was inserted in the database");
-                        resolve(JSON.stringify({msg: 'Patient assigned new ID added correctly'}))
+                        resolve({msg: 'Patient assigned new ID added correctly'})
                     });
                 }
             }else{
-                reject({msg: 'client-side: patient was not inserted'})
+                reject({msg: 'client-side: cannot insert invalid patient'})
             }
         });
     }
@@ -203,15 +203,11 @@ class Patient {
         return new Promise(async function(resolve, reject){
             var err,obj;
             let collection = await _get_patients_collection(db);
-            let matchedPatient = await collection.find({id: id_get},options).toArray((err,obj));
-            //console.log("matchedPatient before first stringify: " + matchedPatient); //debugging line
-            if(matchedPatient != null || matchedPatient != undefined){
-                //console.log("Found patient: " + JSON.stringify(matchedPatient));
-                resolve(JSON.stringify(matchedPatient))
-            }else{
-                console.log("server-side: Could not find a patient with that ID");
-                reject({msg: 'client-side: Could not find a patient with that ID'})
-            }
+            collection.findOne({'id': parseInt(id)},options,(err,obj)=>{
+                if(err) return reject(err);
+                console.log('1 Patient was successfully retreived');
+                resolve({patient: obj, msg: 'client-side: The patient was correctly retrieved'});
+            });
         });
     }
 
@@ -220,18 +216,10 @@ class Patient {
         return new Promise(async function(resolve, reject){
             var patientList = [];
             let collection = await _get_patients_collection(db);
-            let count = await collection.countDocuments({});
-            if(count != null || count != undefined || count != 0){
-                await collection.find({},options).toArray((err,items)=>{
-                    if(err) return reject(err);
-                    resolve({patients: items,msg:'client-side: The books were correctly retreived'})
-                });
-                //console.log("patientList: " + JSON.stringify(patientList));
-                resolve(JSON.stringify(patientList));
-           }else{
-               console.log("Database is empty");
-               reject({msg: 'Cannot locate documents in an empty database'})
-           }
+            collection.find({},options).toArray((err,items)=>{
+                if(err) return reject(err);
+                resolve({patient: items,msg: 'client-side: The patients were successfully retrieved'});
+            });
         });
     }
 

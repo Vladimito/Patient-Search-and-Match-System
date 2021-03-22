@@ -29,8 +29,6 @@ after(async function() {
 
 
 describe('Testing the Patient API', async function(){
-    var savePass = JSON.stringify({msg: 'Patient was inserted correctly'});
-    var savePass2 = JSON.stringify({msg: 'Patient assigned new ID added correctly'});
     describe('Testing the Patient Model - Simple cases', async function(){
         let id = 'b132f06d-2836-0e70-b691-f67b381fcfb0';
         let bday = '2019-08-09';
@@ -60,15 +58,18 @@ describe('Testing the Patient API', async function(){
         it('Test the insertion of a valid patient(Patient.save)', async function(){
             let patient1 = new Patient(id,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,lon,healthExpenses,healthCoverage);
             savePromise = patient1.save(db);
-            await savePromise.then(result =>  assert.strictEqual(result,savePass))
+            let pass = {"msg":"client-side: The patient was correctly inserted in the database"}
+            
+            await savePromise.then(result => assert.strictEqual(result,pass))
             .catch(result => console.log("Error: " + result))
         });
         it('Test the insertion of an invalid patient(Patient.save)', async function(){
             let newZip = '02155674';
             let patient2 = new Patient(id,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,newZip,last,lon,healthExpenses,healthCoverage);
             savePromise = patient2.save(db);
+            let fail = "client-side: cannot insert invalid patient";
             await savePromise.then(result => console.log(result))
-            .catch(result => assert.strictEqual(result,"Cannot insert an invalid patient into the database"));      
+            .catch(result => assert.strictEqual(result.msg,fail))    
         });
         it('Testing the insertion of a patient with the same ID as an existing one(Patient.save) - Patient should be inserted', async function(){
             let bday = '2014-08-11';
@@ -112,9 +113,10 @@ describe('Testing the Patient API', async function(){
         });
         it('Testing if Patient.update() will reject an invalid ID', async function(){
             let pupId = '7951157f4-374b-64fa-8e2e-b12c19cb077';
+            let fail = "client-side: Cannot update document that doesn\'t exist";
             updatePromise = Patient.update(db,ogid,pupId,bday,ssn,first,last,race,ethnicity,gender,birthplace,newAdd,newCity,county,newZip2,lat,lon,newHealthExpen,healthCoverage);
             await updatePromise.then(result => console.log("Result: " + result))
-            .catch(result => assert.strictEqual(result, "{msg: 'Cannot update document that doesn't exist'}"))
+            .catch(result => assert.strictEqual(result.msg, fail))
         });
         it('Testing Patient.getPatientByID() - should properly send success message',async function(){
             let expected = '[{"id":"09fae2f3e-576e-2c57-c4c5-f62b6e19da3","bday":"2019-08-09","dday":" ","ssn":"999-75-3876","drivers":" ","passport":" ","prefix":" ","first":"Merna69","last":"Howell11947","maiden":" ","marital":" ","race":"white","ethnicity":"nonhispanic","gender":"F","birthplace":"Winthrop  Massachusetts  US","address":"580 Quitzon Avenue Suite 58","city":"Concord","state":"Massachusetts","county":"Middlesex","zip":"56773","lat":42,"lon":71,"healthExpenses":23593,"healthCoverage":1033}]';
@@ -125,7 +127,8 @@ describe('Testing the Patient API', async function(){
 
         it('Testing deletion of patient from database Patient.delete()', async function(){
             deleteProm = Patient.delete(db,ogid);
-            await deleteProm.then(result => assert.strictEqual(result, "{msg: 'The patient was deleted from the database'}"))
+            let pass = 'client-side: The patient was deleted from the database';
+            await deleteProm.then(result => assert.strictEqual(result.msg,pass))
             .catch(result => console.log("Error: " + result))
         });
         it('Testing rejection of nonexistant ID when attempting to use Patient.delete() on patient', async function(){
