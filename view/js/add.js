@@ -33,7 +33,7 @@ $(document).ready(function(){
         return c;
     }
 	
-	$("#add-contact-btn").click(function(event){
+	$("#add-patient-btn").click(function(event){
         event.preventDefault();
         let patient = assemble();
         $.ajax({
