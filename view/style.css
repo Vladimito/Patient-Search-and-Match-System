@@ -122,3 +122,7 @@ tr:hover {background-color: #f5f5f5;}
 .even-row:hover {
 	background-color: #cccccc;
 }
+
+p.des {
+  text-align: left;
+}
