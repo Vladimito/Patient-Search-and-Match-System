@@ -6,18 +6,18 @@ $(document).ready(function(){
     $("#btn-list-all").click(function(event){
         event.preventDefault();
         $("#list-patients").empty();
-        let tbl = '<table id="table-list"><tr><th>Surname</th><th>Given Name</th><th>SSN</th><th>Birthday</th><th>Date of Death</th><th>Drivers License</th><th>Passport</th><th>Race</th><th>Ethnicity</th><th>Gender</th><th>Birthplace</th><th>Address</th><th>City</th><th>County/Region</th><th>Postal Code</th><th>Expenses</th><th>Coverage</th></tr></table>';
-        $("#list-patients").append(tbl);
+        
+        //$("#list-patients").append(tbl);
         // Here we query the server-side
         $.ajax({
-            url: '/system',
+            url: '/system/all',
             type: 'GET',
             contentType: 'application/json',                        
             success: function(response){
                 console.log(response);
-                for(let i = 0; i < response.length; i++) {
-                    let obj = response[i];
-                    let tbl_line='';
+				let tbl_line='';
+                for(let i = 0; i < response["patients"].length; i++) {
+                    let obj = response["patients"][i];
                     /**  To add an effect in the table, we can apply
                          even and odd classes. */                    
                     if (i%2 ==0){
@@ -27,7 +27,9 @@ $(document).ready(function(){
                     }                    
                     $("#table-list").append(tbl_line)
                 }
-            },
+				let tbl = '<table id="table-list"><tr><th>Surname</th><th>Given Name</th><th>SSN</th><th>Birthday</th><th>Date of Death</th><th>Drivers License</th><th>Passport</th><th>Race</th><th>Ethnicity</th><th>Gender</th><th>Birthplace</th><th>Address</th><th>City</th><th>County/Region</th><th>Postal Code</th><th>Expenses</th><th>Coverage</th></tr></table>';
+            $("#list-patients").append(tbl);
+			},
             // If there's an error, we can use the alert box to make sure we understand the problem
             error: function(xhr, status, error){
                 var errorMessage = xhr.status + ': ' + xhr.statusText
