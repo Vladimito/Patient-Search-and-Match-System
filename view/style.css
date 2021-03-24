@@ -20,6 +20,7 @@ input {
     padding: 14px 16px;
     transition: 0.3s;
     font-size: 17px;
+	font-family: "Lucida Console", "Courier New", monospace;
 }
   
 .tab button:hover {
@@ -73,16 +74,19 @@ body {
 h1 {
   color: #003399;
   text-align: center;
+  font-family: "Lucida Console", "Courier New", monospace;
 }
 
 h2 {
   color: #003399;
+  font-family: "Lucida Console", "Courier New", monospace;
 }
 
 p {
   font-size: 15px;
   text-align: center;
   color: #003399;
+  font-family: "Lucida Console", "Courier New", monospace;
 }
 
 .column {
