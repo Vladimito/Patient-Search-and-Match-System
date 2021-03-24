@@ -13,18 +13,21 @@
         <button class="tablinks">Add</button>
         <button class="tablinks">Find</button>        
         <button id="btn-list-all" class="tablinks">List</button> 	
+		<button class="tablinks">Search</button>   
       </div>
 	  
 	  <div id="add-patient-tab" class="tabcontent">
+	  <h2> Fill out the information below to add a patient </h2>
+	  <p class="des"> A * means than this field is required </p>
         <form>
             <div class="column">
-                <label for="add-id">ID</label>
+                <label for="add-id">ID*</label>
                 <input type="text" id="add-id">
-                <label for="add-bday">Date of Birth</label>
+                <label for="add-bday">Date of Birth*</label>
                 <input type="text" id="add-bday">
                 <label for="add-dday">Date of Death</label>
                 <input type="text" id="add-dday">
-                <label for="add-ssn">SSN</label>
+                <label for="add-ssn">SSN*</label>
                 <input type="text" id="add-ssn">
                 <label for="add-drivers">Drivers License Number</label>
                 <input type="text" id="add-drivers">
@@ -34,9 +37,9 @@
             <div class="column">
                 <label for="add-prefix">Prefix</label>
                 <input type="text" id="add-prefix">
-                <label for="add-first">First Name</label>
+                <label for="add-first">First Name*</label>
                 <input type="text" id="add-first">
-                <label for="add-last">Last Name</label>
+                <label for="add-last">Last Name*</label>
                 <input type="text" id="add-last">
                 <label for="add-Suffix">Suffix</label>
                 <input type="text" id="add-suffix">
@@ -46,25 +49,25 @@
                 <input type="text" id="add-marital">
             </div>
             <div class="column">
-                <label for="add-race">Race</label>
+                <label for="add-race">Race*</label>
                 <input type="text" id="add-race">
-                <label for="add-ethnicity">Ethnicity</label>
+                <label for="add-ethnicity">Ethnicity*</label>
                 <input type="text" id="add-ethnicity">
-                <label for="add-gender">Gender</label>
+                <label for="add-gender">Gender*</label>
                 <input type="text" id="add-gender">
-                <label for="add-birthplace">Place of Birth</label>
+                <label for="add-birthplace">Place of Birth*</label>
                 <input type="text" id="add-birthplace">
-                <label for="add-address">Address</label>
+                <label for="add-address">Address*</label>
                 <input type="text" id="add-address">
-                <label for="add-city">City</label>
+                <label for="add-city">City*</label>
                 <input type="text" id="add-city">
             </div>
             <div class="column">
-                <label for="add-state">State</label>
+                <label for="add-state">State/Province*</label>
                 <input type="text" id="add-state">
-                <label for="add-county">County</label>
+                <label for="add-county">County/Region*</label>
                 <input type="text" id="add-county">
-                <label for="add-zip">ZIP</label>
+                <label for="add-zip">ZIP*</label>
                 <input type="text" id="add-zip">
                 <label for="add-lat">Latitude</label>
                 <input type="text" id="add-lat">
@@ -84,6 +87,7 @@
 	  <div id="list-patients" class="tabcontent"></div>
 
       <div id="find-patient" class="tabcontent">
+	  <h2> Enter an ID to see information for the associated patient </h2>
         <form>
             <label for="find-id">Patient ID</label>
             <input type="text" id="find-id-search">
