@@ -8,7 +8,7 @@ input {
     width: 100%;
     overflow: hidden;
     border: 2px solid #0000cc;
-    background-color: #ffff66;
+    background-color: #ffffff;
 }
   
 .tab button {
@@ -23,11 +23,11 @@ input {
 }
   
 .tab button:hover {
-    background-color: #ffcc00;
+    background-color: #0099ff;
 }
   
 .tab button.active {
-    background-color: #ccc;
+    background-color: #008ae6;
 }
   
 .tabcontent {
@@ -61,8 +61,8 @@ th {
 }
 
 input[type=text], select {
-  background-color: #ffff99;
-  border: 1px solid #ccc;
+  background-color: #ccffff;
+  border: 1px solid #003366;
   border-radius: 4px;
 }
 
@@ -71,18 +71,18 @@ body {
 }
 
 h1 {
-  color: #009933;
+  color: #003399;
   text-align: center;
 }
 
 h2 {
-  color: #009933;
+  color: #003399;
 }
 
 p {
   font-size: 15px;
   text-align: center;
-  color: #009933;
+  color: #003399;
 }
 
 .column {
