@@ -17,31 +17,65 @@
 	  
 	  <div id="add-patient-tab" class="tabcontent">
         <form>
-            <div class="column"><label for="add-firstname">First Name</label>
-            <input type="text" id="add-firstname" name="firstname">
-			<label for="add-lastname">Last Name</label>
-            <input type="text" id="add-lasttname" name="lastname">
-            <label for="add-ssn">SSN</label>
-            <input type="text" id="add-ssn" name="ssn">
-            <label for="add-telephone">Date of Birth</label>
-            <input type="text" id="add-bday" name="bday">
-            <label for="add-address">Race</label>
-            <input type="text" id="add-race" name="race">
-			<label for="add-address">Ethnic Origin</label>
-            <input type="text" id="add-ethnicity" name="ethnicity"></div>
-			<div class="column"><label for="add-gender">Sex</label>
-            <input type="text" id="add-gender" name="gender">
-			<label for="add-address">Birthplace</label>
-            <input type="text" id="add-birthplace" name="birthplace">
-			<label for="add-address">Address</label>
-            <input type="text" id="add-address" name="address">
-			<label for="add-address">City</label>
-            <input type="text" id="add-city" name="city">
-			<label for="add-address">County</label>
-            <input type="text" id="add-county" name="county">
-			<label for="add-address">Postal Code</label>
-            <input type="text" id="add-zip" name="zip"></div>
-            <div>
+            <div class="column">
+                <label for="add-id">ID</label>
+                <input type="text" id="add-id">
+                <label for="add-bday">Date of Birth</label>
+                <input type="text" id="add-bday">
+                <label for="add-dday">Date of Death</label>
+                <input type="text" id="add-dday">
+                <label for="add-ssn">SSN</label>
+                <input type="text" id="add-ssn">
+                <label for="add-drivers">Drivers License Number</label>
+                <input type="text" id="add-drivers">
+                <label for="add-passport">Passport Number</label>
+                <input type="text" id="add-passport">
+            </div>
+            <div class="column">
+                <label for="add-prefix">Prefix</label>
+                <input type="text" id="add-prefix">
+                <label for="add-first">First Name</label>
+                <input type="text" id="add-first">
+                <label for="add-last">Last Name</label>
+                <input type="text" id="add-last">
+                <label for="add-Suffix">Suffix</label>
+                <input type="text" id="add-suffix">
+                <label for="add-maiden">Maiden Name</label>
+                <input type="text" id="add-maiden">
+                <label for="add-marital">Marital Status</label>
+                <input type="text" id="add-marital">
+            </div>
+            <div class="column">
+                <label for="add-race">Race</label>
+                <input type="text" id="add-race">
+                <label for="add-ethnicity">Ethnicity</label>
+                <input type="text" id="add-ethnicity">
+                <label for="add-gender">Gender</label>
+                <input type="text" id="add-gender">
+                <label for="add-birthplace">Place of Birth</label>
+                <input type="text" id="add-birthplace">
+                <label for="add-address">Address</label>
+                <input type="text" id="add-address">
+                <label for="add-city">City</label>
+                <input type="text" id="add-city">
+            </div>
+            <div class="column">
+                <label for="add-state">State</label>
+                <input type="text" id="add-state">
+                <label for="add-county">County</label>
+                <input type="text" id="add-county">
+                <label for="add-zip">ZIP</label>
+                <input type="text" id="add-zip">
+                <label for="add-lat">Latitude</label>
+                <input type="text" id="add-lat">
+                <label for="add-lon">Longitude</label>
+                <input type="text" id="add-lon">
+                <label for="add-healthExpense">Health Expenses</label>
+                <input type="text" id="add-healthExpense">
+                <label for="add-healthCoverage">Health Coverage</label>
+                <input type="text" id="add-healthCoverage">
+            </div>
+            <div class="button">
                 <button id="add-patient-btn">Add</button>
                 <output id="add-out"></output>
             </div>            
@@ -51,7 +85,7 @@
 
       <div id="find-patient" class="tabcontent">
         <form>
-            <label for="find-id">SSN</label>
+            <label for="find-id">Patient ID</label>
             <input type="text" id="find-id-search">
             <div>
                 <button id="btn-find-patient">Find</button>
@@ -59,66 +93,74 @@
             </div>
         </form>
         <hr>
-        <h2>Contact information</h2>
+        <h2>Patient information</h2>
         <div class="flex-container">  
             <form>         
-                <div class="column"><label for="find-id">ID</label>
-                <input type="text" id="find-id">
-                <label for="find-bday">Date of Birth</label>
-                <input type="text" id="find-bday">
-                <label for="find-dday">Date of Death</label>
-                <input type="text" id="find-dday">
-                <label for="find-ssn">SSN</label>
-                <input type="text" id="find-ssn">
-                <label for="find-drivers">Drivers License Number</label>
-                <input type="text" id="find-drivers">
-                <label for="find-passport">Passport Number</label>
-                <input type="text" id="find-passport">
-                <label for="find-prefix">Prefix</label>
-                <input type="text" id="find-prefix">
-                <label for="find-first">First Name</label>
-                <input type="text" id="find-first">
-                <label for="find-last">Last Name</label>
-                <input type="text" id="find-last">
-                <label for="find-Suffix">Suffix</label>
-                <input type="text" id="find-suffix">
-                <label for="find-maiden">Maiden Name</label>
-                <input type="text" id="find-maiden">
-                <label for="find-marital">Marital Status</label>
-                <input type="text" id="find-marital"></div>
-                <div class="column"><label for="find-race">Race</label>
-                <input type="text" id="find-race">
-                <label for="find-ethnicity">Ethnicity</label>
-                <input type="text" id="find-ethnicity">
-                <label for="find-gender">Gender</label>
-                <input type="text" id="find-gender">
-                <label for="find-birthplace">Place of Birth</label>
-                <input type="text" id="find-birthplace">
-                <label for="find-address">Address</label>
-                <input type="text" id="find-address">
-                <label for="find-city">City</label>
-                <input type="text" id="find-city">
-                <label for="find-state">State</label>
-                <input type="text" id="find-state">
-                <label for="find-county">County</label>
-                <input type="text" id="find-county">
-                <label for="find-zip">ZIP</label>
-                <input type="text" id="find-zip">
-                <label for="find-lat">Latitude</label>
-                <input type="text" id="find-lat">
-                <label for="find-lon">Longitude</label>
-                <input type="text" id="find-lon">
-                <label for="find-healthExpense">Health Expenses</label>
-                <input type="text" id="find-healthExpense">
-                <label for="find-healthCoverage">Health Coverage</label>
-                <input type="text" id="find-healthCoverage"></div>
+                <div class="column">
+                    <label for="find-id">ID</label>
+                    <input type="text" id="find-id">
+                    <label for="find-bday">Date of Birth</label>
+                    <input type="text" id="find-bday">
+                    <label for="find-dday">Date of Death</label>
+                    <input type="text" id="find-dday">
+                    <label for="find-ssn">SSN</label>
+                    <input type="text" id="find-ssn">
+                    <label for="find-drivers">Drivers License Number</label>
+                    <input type="text" id="find-drivers">
+                    <label for="find-passport">Passport Number</label>
+                    <input type="text" id="find-passport">
+                </div>
+                <div class="column">
+                    <label for="find-prefix">Prefix</label>
+                    <input type="text" id="find-prefix">
+                    <label for="find-first">First Name</label>
+                    <input type="text" id="find-first">
+                    <label for="find-last">Last Name</label>
+                    <input type="text" id="find-last">
+                    <label for="find-Suffix">Suffix</label>
+                    <input type="text" id="find-suffix">
+                    <label for="find-maiden">Maiden Name</label>
+                    <input type="text" id="find-maiden">
+                    <label for="find-marital">Marital Status</label>
+                    <input type="text" id="find-marital">
+                </div>
+                <div class="column">
+                    <label for="find-race">Race</label>
+                    <input type="text" id="find-race">
+                    <label for="find-ethnicity">Ethnicity</label>
+                    <input type="text" id="find-ethnicity">
+                    <label for="find-gender">Gender</label>
+                    <input type="text" id="find-gender">
+                    <label for="find-birthplace">Place of Birth</label>
+                    <input type="text" id="find-birthplace">
+                    <label for="find-address">Address</label>
+                    <input type="text" id="find-address">
+                    <label for="find-city">City</label>
+                    <input type="text" id="find-city">
+                </div>
+                <div class="column">
+                    <label for="find-state">State</label>
+                    <input type="text" id="find-state">
+                    <label for="find-county">County</label>
+                    <input type="text" id="find-county">
+                    <label for="find-zip">ZIP</label>
+                    <input type="text" id="find-zip">
+                    <label for="find-lat">Latitude</label>
+                    <input type="text" id="find-lat">
+                    <label for="find-lon">Longitude</label>
+                    <input type="text" id="find-lon">
+                    <label for="find-healthExpense">Health Expenses</label>
+                    <input type="text" id="find-healthExpense">
+                    <label for="find-healthCoverage">Health Coverage</label>
+                    <input type="text" id="find-healthCoverage">
+                </div>
+                <div class="button">
+                    <button id="btn-update-patient">Update</button>
+                    <button id="btn-delete-patient">Delete</button>
+                    <output id="update-delete-out"></output>
+                </div>
             </form> 
         </div>                  
-        <div class="flex-button-container">
-            <button id="btn-update-patient">Update</button>
-            <button id="btn-delete-patient">Delete</button>
-            <output id="update-delete-out"></output>
-        </div>
       </div> 
 
 	<script src="./js/main.js"></script> 

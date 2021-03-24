@@ -101,9 +101,9 @@
      */
     $("#btn-find-patient").click(function(event){
         event.preventDefault();
-        let contact_id = $("#find-id-search").val();
+        let patient_id = $("#find-id-search").val();
         $.ajax({
-            url: '/patients/'+contact_id,
+            url: '/patients/'+patient_id,
             type: 'GET',
             contentType: 'application/json',                        
             success: function(response){
@@ -122,12 +122,12 @@
      */
     $("#btn-update-patient").click(function(event){
         event.preventDefault();
-        let contact_id = $("#find-id-search").val();
-        let contact = assemble();
+        let patient_id = $("#find-id-search").val();
+        let patient = assemble();
         $.ajax({
             url: '/patients/'+patient_id,
             type: 'PUT',
-            data: JSON.stringify(contact),
+            data: JSON.stringify(patient),
             contentType: 'application/json',                        
             success: function(response){
                 console.log(response);
@@ -144,16 +144,15 @@
      */
     $("#btn-delete-patient").click(function(event){
         event.preventDefault();
-        let contact_name = $("#find-id-search").val();
+        let patient_id = $("#find-id-search").val();
         $.ajax({
             url: '/patients/'+patient_id,
             type: 'DELETE',
             contentType: 'application/json',                        
             success: function(response){
-                // console.log(JSON.stringify(response));
                 console.log(response);
                 $("#update-delete-out").text(response.msg);
-                // We clear the fields after the data is deleted
+
                 fillFindContainer(null);              
             },                   
             error: function(xhr, status, error){

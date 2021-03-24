@@ -87,7 +87,14 @@ p {
 
 .column {
   float: left;
-  width: 50%;
+  padding: 10px 20px;
+  /*width: 50%;*/
+}
+
+.button {
+  display: block;
+  float: left;
+  clear: left;
 }
 
 .row:after {
