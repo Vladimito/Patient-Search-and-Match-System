@@ -7,7 +7,7 @@ input {
 .tab {
     width: 100%;
     overflow: hidden;
-    border: 2px solid Tomato;
+    border: 2px solid #0000cc;
     background-color: #ffff66;
 }
   
