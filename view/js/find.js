@@ -103,7 +103,7 @@ $(document).ready(function(){
         event.preventDefault();
         let patient_id = $("#find-id-search").val();
         $.ajax({
-            url: '/patients/'+patient_id,
+            url: '/system/'+patient_id,
             type: 'GET',
             contentType: 'application/json',                        
             success: function(response){
