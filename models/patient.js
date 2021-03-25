@@ -113,7 +113,7 @@ class Patient {
             city: 'required|string',
             state: 'required|string',
             county: 'required|string',
-            zip: 'required|string|max:5',
+            zip: 'required|string|max:6',
             lat: 'numeric',
             lon: 'numeric',
             healthExpenses: 'numeric',
