@@ -12,9 +12,10 @@ async function _get_patients_collection (db){
 };
 
 const options = {
-    projection: {_id:0,id:1, bday:1,dday:1, ssn:1,drivers:1,passport:1,prefix:1,first:1,last:1,maiden:1,marital:1,race:1,ethnicity:1,gender:1,birthplace:1,address:1,city:1,state:1,county:1,zip:1,lat:1,lon:1,healthExpenses:1,healthCoverage:1},
+    projection: {_id:0,id:1, bday:1,dday:1, ssn:1,drivers:1,passport:1,prefix:1,first:1,last:1,maiden:1,marital:1,race:1,ethnicity:1,gender:1,birthplace:1,address:1,city:1,state:1,county:1,zip:1,lat:1,lon:1,healthExpenses:1,healthCoverage:1,symptoms:0},
 };
 
+const sympquery = {"symptoms"};
 //Generates a random patient ID
 function patientIDGen() {
     var len = 36;
@@ -29,39 +30,8 @@ function patientIDGen() {
     }
     return PID;
 }
-
-
-function _isStringified(str) {
-    try{
-        JSON.parse(str);
-    }catch(e){
-        console.log("Not valid JSON string");
-        return false;
-    }
-    console.log("Valid JSON string");
-    return true;
-}
-//This function will read patients.csv and convert it into a JSON array
-//Then it will load it into the database
-//Unused at the moment, will implement fully if needed
-async function _loadDB(db){
-    let jsonArray = await ctoj().fromFile(csvPath); //converts contents to jsonArray
-    let collection = await _get_patients_collection(db); //gets the patientcollection
-    //for each that will iterate throughout the jsonArray
-    //for each element in the array it will insert it into the mongodb
-    jsonArray.forEach(element => {
-        collection.insertOne(element, (err,obj) =>{
-            if(err) reject(err);
-            //The two console logs are mainly for debugging
-            console.log("Inserting.."); 
-            console.log('A document was inserted in the database');
-            resolve("{msg: 'Document correctly inserted into database'}")
-        });
-    });
-}
-
 class Patient {
-    constructor(id, bday,dday, ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,lon,healthExpenses,healthCoverage) {
+    constructor(id, bday,dday, ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,lon,healthExpenses,healthCoverage,symptoms) {
         this.id = id
         this.bday = bday
         this.dday = dday
@@ -87,6 +57,7 @@ class Patient {
         this.lon = lon
         this.healthExpenses = healthExpenses
         this.healthCoverage = healthCoverage
+        this.symptoms = symptoms
     }
 
 
@@ -117,7 +88,8 @@ class Patient {
             lat: 'numeric',
             lon: 'numeric',
             healthExpenses: 'numeric',
-            healthCoverage: 'numeric'
+            healthCoverage: 'numeric',
+            symptoms: 'string'
 
         }
         const validation = new Validator(this, rules);
@@ -203,13 +175,23 @@ class Patient {
         return new Promise(async function(resolve, reject){
             var err,obj;
             let collection = await _get_patients_collection(db);
-            collection.findOne({'id': parseInt(id)},options,(err,obj)=>{
+            collection.findOne({'id': parseInt(id_get)},options,(err,obj)=>{
                 if(err) return reject(err);
                 console.log('1 Patient was successfully retreived');
                 resolve({patient: obj, msg: 'client-side: The patient was correctly retrieved'});
             });
         });
     }
+
+    /*
+    static async getPatientBySymp(db, symptom){
+        var symptom_get = symptom;
+        return new Promise(async function(resolve, reject){
+            var err,obj;
+            let collection = await _get_patients_collection(db);
+            
+        })
+    }*/
 
     //Method that returns a list of all patients
     static async getPatients(db) {
