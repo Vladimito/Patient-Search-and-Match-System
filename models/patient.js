@@ -12,7 +12,7 @@ async function _get_patients_collection (db){
 };
 
 const options = {
-    projection: {_id:0,id:1, bday:1,dday:1, ssn:1,drivers:1,passport:1,prefix:1,first:1,last:1,maiden:1,marital:1,race:1,ethnicity:1,gender:1,birthplace:1,address:1,city:1,state:1,county:1,zip:1,lat:1,lon:1,healthExpenses:1,healthCoverage:1,symptoms:0},
+    projection: {_id:0,id:1, bday:1,dday:1, ssn:1,drivers:1,passport:1,prefix:1,first:1,last:1,maiden:1,marital:1,race:1,ethnicity:1,gender:1,birthplace:1,address:1,city:1,state:1,county:1,zip:1,lat:1,lon:1,healthExpenses:1,healthCoverage:1,symptoms:1},
 };
 
 const sympquery = {"symptoms"};
@@ -183,15 +183,20 @@ class Patient {
         });
     }
 
-    /*
+    
     static async getPatientBySymp(db, symptom){
         var symptom_get = symptom;
         return new Promise(async function(resolve, reject){
             var err,obj;
             let collection = await _get_patients_collection(db);
-            
-        })
-    }*/
+            collection.find({'symptoms': symptom_get},options,(err,obj)=>{
+                if(err) return reject(err);
+                console.log('Patients were successfully retreived with symptom ' + symptom_get);
+                resolve({patient: obj,msg: 'client-side: Patients were retrieved with symptom ' + symptom_get});
+                
+            });
+        });
+    }
 
     //Method that returns a list of all patients
     static async getPatients(db) {
