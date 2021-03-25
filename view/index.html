@@ -45,16 +45,24 @@
                 <input type="text" id="add-suffix">
                 <label for="add-maiden">Maiden Name</label>
                 <input type="text" id="add-maiden">
-                <label for="add-marital">Marital Status</label>
-                <input type="text" id="add-marital">
+                <label for="add-marital">Marital Status</label><br>
+                <select id="add-gender" name="add-gender">
+			<option value="Married">Married</option>
+			<option value="Never married">Not married</option>
+			<option value="Divorced">Divorced</option>
+			<option value="Widowed">Widowed</option>
+		  </select><br>
             </div>
             <div class="column">
                 <label for="add-race">Race*</label>
                 <input type="text" id="add-race">
                 <label for="add-ethnicity">Ethnicity*</label>
                 <input type="text" id="add-ethnicity">
-                <label for="add-gender">Gender*</label>
-                <input type="text" id="add-gender">
+                <label for="add-gender">Sex*</label><br>
+                <select id="add-gender" name="add-gender">
+			<option value="M">Male</option>
+			<option value="F">Female</option>
+		  </select><br>
                 <label for="add-birthplace">Place of Birth*</label>
                 <input type="text" id="add-birthplace">
                 <label for="add-address">Address*</label>
@@ -67,7 +75,7 @@
                 <input type="text" id="add-state">
                 <label for="add-county">County/Region*</label>
                 <input type="text" id="add-county">
-                <label for="add-zip">ZIP*</label>
+                <label for="add-zip">Postal Code*</label>
                 <input type="text" id="add-zip">
                 <label for="add-lat">Latitude</label>
                 <input type="text" id="add-lat">
@@ -77,11 +85,11 @@
                 <input type="text" id="add-healthExpense">
                 <label for="add-healthCoverage">Health Coverage</label>
                 <input type="text" id="add-healthCoverage">
-            </div>
+            
             <div class="button">
                 <button id="add-patient-btn">Add</button>
                 <output id="add-out"></output>
-            </div>            
+            </div>   </div>         
         </form>
       </div>
 	  <div id="list-patients" class="tabcontent"></div>
