@@ -172,7 +172,20 @@
             </form> 
         </div>                  
       </div> 
-
+    <div id="search-patient" class="tabcontent">
+        <h2>Enter a symptom to list patients with that specific symptom</h2>
+        <form>
+            <div class="column">
+                <label for="search-symptom">Symptom</label>
+                <input type="text" id="search-symptom">
+            </div>
+            <div class="button">
+                <button id="search-patient-btn">Search Symptom</button>
+                <output id="search-out"></output>
+            </div>
+        </form>
+        <div id="list-symptoms" class="tabcontent"></div>
+    </div>
 	<script src="./js/main.js"></script> 
 	  <script src="./js/add.js"></script>  
 	  <script src="./js/list.js"></script> 
