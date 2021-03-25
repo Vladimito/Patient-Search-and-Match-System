@@ -3,7 +3,7 @@ const Patient = require("../models/patient.js");
 
 const create = async(req,res) =>{
 	console.log("Running create");
-	const new_patient = new Patient(req.body.id,req.body.bday,req.body.dday,req.body.ssn,req.body.drivers,req.body.passport,req.body.prefix,req.body.first,req.body.last,req.body.suffix,req.body.maiden,req.body.marital,req.body.race,req.body.ethnicity,req.body.gender,req.body.birthplace,req.body.address,req.body.city,req.body.state,req.body.county,req.body.zip,req.body.lat,req.body.lon,req.body.healthExpenses,req.body.healthCoverage);
+	const new_patient = new Patient(req.body.id,req.body.bday,req.body.dday,req.body.ssn,req.body.drivers,req.body.passport,req.body.prefix,req.body.first,req.body.last,req.body.suffix,req.body.maiden,req.body.marital,req.body.race,req.body.ethnicity,req.body.gender,req.body.birthplace,req.body.address,req.body.city,req.body.state,req.body.county,req.body.zip,req.body.lat,req.body.lon,req.body.healthExpenses,req.body.healthCoverage,req.body.symptoms);
 	console.log("new_Patient: " + new_patient);
 	let db = req.db;
 	new_patient.save(db).then(obj =>{
