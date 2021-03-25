@@ -37,5 +37,11 @@ $(document).ready(function(){
             }
         });
     });
+
+    /*
+    $("#search-patient-btn").click(function(event){
+        event.preventDefault();
+        $("#list-symptoms").empty();
+    });*/
     
 });  
