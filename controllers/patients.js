@@ -60,11 +60,22 @@ const all = async(req,res) =>{
 		throw new Error(err);
 	}
 }
-
+const allSymps = async(req,res) =>{
+	let db = req.db;
+	const sympToUse = req.params.symptoms;
+	try{
+		let obj = await Patient.getPatientBySymp(db,sympToUse);
+		res.send(obj);
+	}catch(err){
+		res.send('There was an error while retrieving the patients. (err:'+err+')');
+		throw new Error(err);
+	}
+}
 module.exports = {
 	create,
 	deleteOne,
 	updateOne,
 	getOne,
-	all
+	all,
+	allSymps
 }
