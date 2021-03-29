@@ -159,11 +159,15 @@ class Patient {
         var id_delete =id;
         return new Promise(async function(resolve,reject){
             let collection = await _get_patients_collection(db);
-            await collection.deleteOne({id: id_delete}, (err,obj) =>{
-                if(err) reject(err);
-                console.log("server-side: The patient with id = " + id_delete + ' was correctly deleted');
-                resolve({msg: 'client-side: The patient was deleted from the database'})
-            });
+            let deleted = await collection.deleteOne({id: id_delete});
+            if(deleted === true){
+                console.log("deleted item exist");
+                resolve({msg: "client-side: patient was correctly deleted"});
+            }
+            else{
+                console.log("deleted item doesn't exist");
+                reject({msg: "client-side: patient was not correctly deleted"});
+            }
         });
     }
 
@@ -188,7 +192,7 @@ class Patient {
         var symptom_get = symptom;
         return new Promise(async function(resolve, reject){
             let collection = await _get_patients_collection(db);
-            let patient = await collection.findOne({symptoms: symptom_get},options);
+            let patient = await collection.find({symptoms: symptom_get},options);
             if(patient !== undefined || patient !== null)
             {
                 resolve({patients: patient, msg: "client-side: Patient correctly retrieved"});
