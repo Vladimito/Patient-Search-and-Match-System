@@ -190,15 +190,13 @@ class Patient {
     //Method that returns all patients based upon an entered symptom 
     static async getPatientBySymp(db, symptom){
         var symptom_get = symptom;
+        console.log("symptom_get: " + symptom_get);
         return new Promise(async function(resolve, reject){
             let collection = await _get_patients_collection(db);
-            let patient = await collection.find({symptoms: symptom_get},options);
-            if(patient !== undefined || patient !== null)
-            {
-                resolve({patients: patient, msg: "client-side: Patient correctly retrieved"});
-            }else{
-                reject({msg: "client-side: Patient not retrieved"});
-            }
+            await collection.find({symptoms: symptom_get},options).toArray((err,items) =>{
+                if (err) return reject(err);
+                resolve({patient: items,msg: 'client-side: The patient(s) were successfully retrieved from '});
+            });
         });
     }
 

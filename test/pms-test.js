@@ -123,42 +123,38 @@ describe('Testing the Patient API', async function(){
         });
         it('Testing Patient.getPatientByID() - should properly send success message',async function(){
             let nid = "09fae2f3e-576e-2c57-c4c5-f62b6e19da3";
-            //let patient = '"id":"09fae2f3e-576e-2c57-c4c5-f62b6e19da3","bday":"2019-08-09","dday":" ","ssn":"999-75-3876","drivers":" ","passport":" ","prefix":" ","first":"Merna69","last":"Howell11947","maiden":" ","marital":" ","race":"white","ethnicity":"nonhispanic","gender":"F","birthplace":"Winthrop  Massachusetts  US","address":"580 Quitzon Avenue Suite 58","city":"Concord","state":"Massachusetts","county":"Middlesex","zip":"56773","lat":42,"lon":71,"healthExpenses":23593,"healthCoverage":1033,"symptoms":"fever"';
             let pass = "client-side: Patient correctly retrieved";
             getByIDProm = Patient.getPatientByID(db,nid);
             await getByIDProm.then(result => assert.strictEqual(result.msg,pass))
             .catch(result => console.log("Error: " + result))
         });
-
-        /*it('Testing deletion of patient from database Patient.delete()', async function(){
+        it('Testing deletion of patient from database Patient.delete()', async function(){
             deleteProm = Patient.delete(db,ogid);
             let pass = 'client-side: The patient was deleted from the database';
             await deleteProm.then(result => assert.strictEqual(result.msg,pass))
-            .catch(result => console.log("Error: " + result))
+            .catch(result => console.log(result))
         });
         it('Testing rejection of nonexistant ID when attempting to use Patient.delete() on patient', async function(){
-            deleteProm = Patient.delete(db,ogid);
+            deleteProm = Patient.delete(db,'b132f0-2333-0e70-b691-f67b38cfb0');
+            let fail = "client-side: patient was not correctly deleted";
             await deleteProm.then(result => console.log(result))
-            .catch(result => assert.strictEqual(result, "{msg: 'Could not find a patient with that ID'}"))
-        });*/
-        it('Testing output of all patients in a db with Patient.getPatients(). Testing if the returned list is not null and a JSON string',async function(){
+            .catch(result => assert.strictEqual(result.msg,fail))
+        });
+        it('Testing output of all patients in a db with Patient.getPatients(). ',async function(){
             getAllProm = Patient.getPatients(db);
             let pass = 'client-side: The patients were successfully retrieved'
             await getAllProm.then(result => assert.strictEqual(result.msg,pass))
             .catch(result => console.log(result))
         });
-        /*it('Testing if database is removed that the proper rejection message will be sent', async function(){
-            console.log("removing patients");
-            const patients = db.collection('patients');
-            await patients.deleteMany({});
-            getAllProm = Patient.getPatients(db);
-            await getAllProm.then(result => console.log('Result: ' + result))
-            .catch(result => assert.strictEqual(result, "{msg: 'Cannot locate documents in an empty database'}"))
-
-        });*/
-        describe('Testing Patient API - Complex Cases', function() {
+        it('Testing to see if getPatientBySymp() will return a patient', async function(){
+            getSympProm = Patient.getPatientBySymp(db,"fever");
+            let pass = "client-side: The patients were successfully retrieved by symptoms";
+            await getSympProm.then(result => assert.strictEqual(result.msg,pass))
+            .catch(result => console.log("Error: " + result))
+        });
+        /*describe('Testing Patient API - Complex Cases', function() {
             var myurl = 'http://localhost:3000';
-           /* it ('Testing POST/patient, Delete/patient/:id',function(done){
+           /*it ('Testing POST/patient, Delete/patient/:id',function(done){
                 let patient1 = {
                     id: '781d9cff-b412-da29-724b-fb8e92ad3f96',
                     bday: '1999-01-25',
@@ -196,8 +192,8 @@ describe('Testing the Patient API', async function(){
                     assert.strictEqual(JSON.parse(body).msg,"Patient added correctly");
                     done();
                 });
-            });*/
+            });
 
-        });
+        });*/
     });
 });
