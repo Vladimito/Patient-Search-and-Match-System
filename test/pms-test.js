@@ -21,7 +21,7 @@ before(async function() {
 after(async function() {
     //clears the db after every test
     //Mainly used for debugging
-    console.log("removing patients");
+    console.log("removing test patients");
     const patients = db.collection('patients');
     await patients.deleteMany({});
     await mongo.closeDBConnection();
@@ -55,12 +55,13 @@ describe('Testing the Patient API', async function(){
         let lon = 71;
         let healthExpenses = 44232;
         let healthCoverage = 1033;
+        let symptoms = "fever";
         it('Test the insertion of a valid patient(Patient.save)', async function(){
-            let patient1 = new Patient(id,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,lon,healthExpenses,healthCoverage);
+            let patient1 = new Patient(id,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,lon,healthExpenses,healthCoverage,symptoms);
             savePromise = patient1.save(db);
-            let pass = {"msg":"client-side: The patient was correctly inserted in the database"}
+            let pass = "client-side: The patient was correctly inserted in the database";
             
-            await savePromise.then(result => assert.strictEqual(result,pass))
+            await savePromise.then(result => assert.strictEqual(result.msg,pass))
             .catch(result => console.log("Error: " + result))
         });
         it('Test the insertion of an invalid patient(Patient.save)', async function(){
@@ -93,11 +94,12 @@ describe('Testing the Patient API', async function(){
             let county = 'Middlesex';
             let zip = '02342';
             let lat = 42;
-            let lon
-
-            let patient3 = new Patient(id,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,lon,healthExpenses,healthCoverage);
+            let lon = 20;
+            let symptoms = "chest pains";
+            let patient3 = new Patient(id,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,lon,healthExpenses,healthCoverage,symptoms);
             savePromise = patient3.save(db);
-            await savePromise.then(result => assert.strictEqual(result, savePass2))
+            let pass = 'client-side: Patient assigned new ID added correctly and added';
+            await savePromise.then(result => assert.strictEqual(result.msg, pass))
             .catch(result => console.log("Error: " + result))
         });
         let ogid = 'b132f06d-2836-0e70-b691-f67b381fcfb0';
@@ -107,8 +109,9 @@ describe('Testing the Patient API', async function(){
         let newCity = 'Concord';
         let newZip2 = '56773';
         it('Testing the update of patient 1\'s information ',async function(){
-            updatePromise = Patient.update(db,ogid,nid,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,newAdd,newCity,county,newZip2,lat,lon,newHealthExpen,healthCoverage);
-            await updatePromise.then(result => assert.strictEqual(result,"{msg: 'Document was correctly updated'}"))
+            updatePromise = Patient.update(db,ogid,nid,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,newAdd,newCity,county,newZip2,lat,lon,newHealthExpen,healthCoverage,symptoms);
+            let pass = 'client-side: Document was correctly updated';
+            await updatePromise.then(result => assert.strictEqual(result.msg,pass))
             .catch(result => console.log("Error: " + result))
         });
         it('Testing if Patient.update() will reject an invalid ID', async function(){
@@ -119,13 +122,15 @@ describe('Testing the Patient API', async function(){
             .catch(result => assert.strictEqual(result.msg, fail))
         });
         it('Testing Patient.getPatientByID() - should properly send success message',async function(){
-            let expected = '[{"id":"09fae2f3e-576e-2c57-c4c5-f62b6e19da3","bday":"2019-08-09","dday":" ","ssn":"999-75-3876","drivers":" ","passport":" ","prefix":" ","first":"Merna69","last":"Howell11947","maiden":" ","marital":" ","race":"white","ethnicity":"nonhispanic","gender":"F","birthplace":"Winthrop  Massachusetts  US","address":"580 Quitzon Avenue Suite 58","city":"Concord","state":"Massachusetts","county":"Middlesex","zip":"56773","lat":42,"lon":71,"healthExpenses":23593,"healthCoverage":1033}]';
+            let nid = "09fae2f3e-576e-2c57-c4c5-f62b6e19da3";
+            //let patient = '"id":"09fae2f3e-576e-2c57-c4c5-f62b6e19da3","bday":"2019-08-09","dday":" ","ssn":"999-75-3876","drivers":" ","passport":" ","prefix":" ","first":"Merna69","last":"Howell11947","maiden":" ","marital":" ","race":"white","ethnicity":"nonhispanic","gender":"F","birthplace":"Winthrop  Massachusetts  US","address":"580 Quitzon Avenue Suite 58","city":"Concord","state":"Massachusetts","county":"Middlesex","zip":"56773","lat":42,"lon":71,"healthExpenses":23593,"healthCoverage":1033,"symptoms":"fever"';
+            let pass = "client-side: Patient correctly retrieved";
             getByIDProm = Patient.getPatientByID(db,nid);
-            await getByIDProm.then(result => assert.strictEqual(result, expected))
-            .catch(result => console.log("Error: " + result));
-        })
+            await getByIDProm.then(result => assert.strictEqual(result.msg,pass))
+            .catch(result => console.log("Error: " + result))
+        });
 
-        it('Testing deletion of patient from database Patient.delete()', async function(){
+        /*it('Testing deletion of patient from database Patient.delete()', async function(){
             deleteProm = Patient.delete(db,ogid);
             let pass = 'client-side: The patient was deleted from the database';
             await deleteProm.then(result => assert.strictEqual(result.msg,pass))
@@ -135,13 +140,14 @@ describe('Testing the Patient API', async function(){
             deleteProm = Patient.delete(db,ogid);
             await deleteProm.then(result => console.log(result))
             .catch(result => assert.strictEqual(result, "{msg: 'Could not find a patient with that ID'}"))
-        });
+        });*/
         it('Testing output of all patients in a db with Patient.getPatients(). Testing if the returned list is not null and a JSON string',async function(){
             getAllProm = Patient.getPatients(db);
-            await getAllProm.then(result => expect(result).to.have.lengthOf.above(0).and.to.be.a('string'))
+            let pass = 'client-side: The patients were successfully retrieved'
+            await getAllProm.then(result => assert.strictEqual(result.msg,pass))
             .catch(result => console.log(result))
         });
-        if('Testing if database is removed that the proper rejection message will be sent', async function(){
+        /*it('Testing if database is removed that the proper rejection message will be sent', async function(){
             console.log("removing patients");
             const patients = db.collection('patients');
             await patients.deleteMany({});
@@ -149,7 +155,7 @@ describe('Testing the Patient API', async function(){
             await getAllProm.then(result => console.log('Result: ' + result))
             .catch(result => assert.strictEqual(result, "{msg: 'Cannot locate documents in an empty database'}"))
 
-        });
+        });*/
         describe('Testing Patient API - Complex Cases', function() {
             var myurl = 'http://localhost:3000';
            /* it ('Testing POST/patient, Delete/patient/:id',function(done){

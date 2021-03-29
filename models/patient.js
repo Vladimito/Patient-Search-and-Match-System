@@ -126,7 +126,7 @@ class Patient {
                         if(err) reject(err);
                         console.log("Inserting..");
                         console.log("server-side: A document was inserted in the database");
-                        resolve({msg: 'Patient assigned new ID added correctly'})
+                        resolve({msg: 'client-side: Patient assigned new ID added correctly and added'})
                     });
                 }
             }else{
@@ -137,13 +137,13 @@ class Patient {
 
     //Updates patient information if something is not entered it is assumed that the value of the attribute is an empty string/0
     //Current implementation is not all that efficient at the moment
-    static async update(db,ogid,newid,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,county,zip,lat,lon,healthExpenses,healthCoverage){
+    static async update(db,ogid,newid,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,county,zip,lat,lon,healthExpenses,healthCoverage,symptoms){
         return new Promise(async function(resolve,reject){
             let collection = await _get_patients_collection(db);
             let findP = await collection.findOne({id:ogid},{upsert: true});
             if(findP != null || findP != undefined){
-                collection.updateOne({id: ogid},
-                    {$set: {"id": newid, "bday": bday,"dday": dday,"ssn":ssn,"drivers":drivers,"passport":passport,"prefix": prefix,"first": first,"last": last,"suffix": suffix,"maiden": maiden,"marital": marital,"race": race,"ethnicity":ethnicity,"gender":gender,"birthplace":birthplace,"address":address,"city":city,"county":county,"zip":zip,"lat": lat,"lon": lon,"healthExpenses": healthExpenses,"healthCoverage": healthCoverage}})
+                await collection.updateOne({id: ogid},
+                    {$set: {"id": newid, "bday": bday,"dday": dday,"ssn":ssn,"drivers":drivers,"passport":passport,"prefix": prefix,"first": first,"last": last,"suffix": suffix,"maiden": maiden,"marital": marital,"race": race,"ethnicity":ethnicity,"gender":gender,"birthplace":birthplace,"address":address,"city":city,"county":county,"zip":zip,"lat": lat,"lon": lon,"healthExpenses": healthExpenses,"healthCoverage": healthCoverage,"symptoms":symptoms}})
                     console.log("Document with id = " + ogid + "was updated");
                     resolve({msg: 'client-side: Document was correctly updated'})
     
@@ -159,7 +159,7 @@ class Patient {
         var id_delete =id;
         return new Promise(async function(resolve,reject){
             let collection = await _get_patients_collection(db);
-            collection.deleteOne({id: id_delete}, (err,obj) =>{
+            await collection.deleteOne({id: id_delete}, (err,obj) =>{
                 if(err) reject(err);
                 console.log("server-side: The patient with id = " + id_delete + ' was correctly deleted');
                 resolve({msg: 'client-side: The patient was deleted from the database'})
@@ -172,13 +172,14 @@ class Patient {
     static async getPatientByID(db, id) {
         var id_get = id;
         return new Promise(async function(resolve, reject){
-            var err,obj;
             let collection = await _get_patients_collection(db);
-            collection.findOne({'id': parseInt(id_get)},options,(err,obj)=>{
-                if(err) return reject(err);
-                console.log('1 Patient was successfully retreived');
-                resolve({patient: obj, msg: 'client-side: The patient was correctly retrieved'});
-            });
+            let patient = await collection.findOne({id: id_get},options)
+            if(patient !== undefined || patient !== null) //findOne returns undefined if there is no document, therefore we reject when the obj is undefined/null
+            {
+                resolve({patients: patient, msg: "client-side: Patient correctly retrieved"});
+            }else{
+                reject({msg: "client-side: Patient not retrieved"});
+            }
         });
     }
 
@@ -188,7 +189,7 @@ class Patient {
         return new Promise(async function(resolve, reject){
             var err,obj;
             let collection = await _get_patients_collection(db);
-            collection.find({'symptoms': symptom_get},options,(err,obj)=>{
+            await collection.find({'symptoms': symptom_get},options,(err,obj)=>{
                 if(err) return reject(err);
                 console.log('Patients were successfully retreived with symptom ' + symptom_get);
                 resolve({patient: obj,msg: 'client-side: Patients were retrieved with symptom ' + symptom_get});
@@ -200,9 +201,8 @@ class Patient {
     //Method that returns a list of all patients
     static async getPatients(db) {
         return new Promise(async function(resolve, reject){
-            var patientList = [];
             let collection = await _get_patients_collection(db);
-            collection.find({},options).toArray((err,items)=>{
+            await collection.find({},options).toArray((err,items)=>{
                 if(err) return reject(err);
                 resolve({patient: items,msg: 'client-side: The patients were successfully retrieved'});
             });
