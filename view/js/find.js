@@ -93,6 +93,7 @@ $(document).ready(function(){
         c.lon = $("#find-lon").val();
         c.healthExpenses = $("#find-healthExpense").val();
         c.healthCoverage = $("#find-healthCoverage").val();
+        c.symptoms = $("#find-symptoms").val();
         
         return c;
     }

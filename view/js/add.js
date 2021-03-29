@@ -5,31 +5,31 @@ $(document).ready(function(){
      function assemble(){
         let c = {};
         c.id = $("#add-id").val();
-        c.bday = $("add-bday").val();
-        c.dday = $("add-dday").val();
-        c.ssn = $("add-ssn").val();
-        c.drivers = $("add-drivers").val();
-        c.passport = $("add-passport").val();
-        c.prefix = $("add-prefix").val();
-        c.first = $("add-first").val();
-        c.last = $("add-last").val();
-        c.suffix = $("add-suffix").val();
-        c.maiden = $("add-maiden").val();
-        c.marital = $("add-marital").val();
-        c.race = $("add-race").val();
-        c.ethnicity = $("add-ethnicity").val();
-        c.gender = $("add-gender").val();
-        c.birthplace = $("add-birthplace").val();
-        c.address = $("add-address").val();
-        c.city = $("add-city").val();
-        c.state = $("add-state").val();
-        c.county = $("add-county").val();
-        c.zip = $("add-zip").val();
-        c.lat = $("add-lat").val();
-        c.lon = $("add-lon").val();
-        c.healthExpenses = $("add-healthExpenses").val();
-        c.healthCoverage = $("add-healthCoverage").val();
-        
+        c.bday = $("#add-bday").val();
+        c.dday = $("#add-dday").val();
+        c.ssn = $("#add-ssn").val();
+        c.drivers = $("#add-drivers").val();
+        c.passport = $("#add-passport").val();
+        c.prefix = $("#add-prefix").val();
+        c.first = $("#add-first").val();
+        c.last = $("#add-last").val();
+        c.suffix = $("#add-suffix").val();
+        c.maiden = $("#add-maiden").val();
+        c.marital = $("#add-marital").val();
+        c.race = $("#add-race").val();
+        c.ethnicity = $("#add-ethnicity").val();
+        c.gender = $("#add-gender").val();
+        c.birthplace = $("#add-birthplace").val();
+        c.address = $("#add-address").val();
+        c.city = $("#add-city").val();
+        c.state = $("#add-state").val();
+        c.county = $("#add-county").val();
+        c.zip = $("#add-zip").val();
+        c.lat = $("#add-lat").val();
+        c.lon = $("#add-lon").val();
+        c.healthExpenses = $("#add-healthExpenses").val();
+        c.healthCoverage = $("#add-healthCoverage").val();
+        c.symptoms = $("#add-symptoms").val();
         return c;
     }
 	
