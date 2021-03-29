@@ -42,8 +42,8 @@ $(document).ready(function(){
             contentType: 'application/json',
             data: JSON.stringify(patient),
             success: function(response){
-                console.log(JSON.stringify(response));
-                $("#add-out").text(response);
+                console.log(JSON.stringify(response.msg));
+                $("#add-out").text(response.msg);
             },        
             error: function(xhr, status, error){
                 var errorMessage = xhr.status + ': ' + xhr.statusText
