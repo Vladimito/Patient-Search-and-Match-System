@@ -187,14 +187,14 @@ class Patient {
     static async getPatientBySymp(db, symptom){
         var symptom_get = symptom;
         return new Promise(async function(resolve, reject){
-            var err,obj;
             let collection = await _get_patients_collection(db);
-            await collection.find({'symptoms': symptom_get},options,(err,obj)=>{
-                if(err) return reject(err);
-                console.log('Patients were successfully retreived with symptom ' + symptom_get);
-                resolve({patient: obj,msg: 'client-side: Patients were retrieved with symptom ' + symptom_get});
-
-            });
+            let patient = await collection.findOne({symptoms: symptom_get},options);
+            if(patient !== undefined || patient !== null)
+            {
+                resolve({patients: patient, msg: "client-side: Patient correctly retrieved"});
+            }else{
+                reject({msg: "client-side: Patient not retrieved"});
+            }
         });
     }
 
