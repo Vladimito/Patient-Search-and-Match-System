@@ -77,7 +77,7 @@ class Patient {
             marital: 'string',
             race: 'required|string',
             ethnicity: 'required|string',
-            gender: 'required|string|max:1',
+            gender: 'required|string',
             birthplace: 'required|string',
             address: 'required|string',
             city: 'required|string',
@@ -101,7 +101,7 @@ class Patient {
     //and the places it inside the patient database
     async save(db) {
         var patient = this;
-
+        //console.log("Saving Patient: " + JSON.stringify(patient));
         //console.log('patient.id: ' + patient.id);
         return new Promise(async function(resolve, reject) {
             let collection = await _get_patients_collection(db);
