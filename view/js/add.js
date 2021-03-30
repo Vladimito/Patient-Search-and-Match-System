@@ -27,7 +27,7 @@ $(document).ready(function(){
         c.zip = $("#add-zip").val();
         c.lat = $("#add-lat").val();
         c.lon = $("#add-lon").val();
-        c.healthExpenses = $("#add-healthExpenses").val();
+        c.healthExpenses = $("#add-healthExpense").val();
         c.healthCoverage = $("#add-healthCoverage").val();
         c.symptoms = $("#add-symptoms").val();
         return c;
