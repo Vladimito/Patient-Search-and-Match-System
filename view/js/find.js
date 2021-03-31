@@ -93,7 +93,7 @@ $(document).ready(function(){
         c.lon = $("#find-lon").val();
         c.healthExpenses = $("#find-healthExpense").val();
         c.healthCoverage = $("#find-healthCoverage").val();
-        c.symptoms = $("#find-symptoms").val();
+        c.symptoms = $("#find-symptoms")
         
         return c;
     }
@@ -110,7 +110,7 @@ $(document).ready(function(){
             success: function(response){
                 console.log(response);
                 $("#find-out").text(response.msg);
-                fillFindContainer(response.data);              
+                fillFindContainer(response.patients);              
             },                   
             error: function(xhr, status, error){
                 var errorMessage = xhr.status + ': ' + xhr.statusText
