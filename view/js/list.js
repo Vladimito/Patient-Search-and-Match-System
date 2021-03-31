@@ -50,18 +50,19 @@ $(document).ready(function(){
             success: function(response){
                 console.log(response);
                 				let tbl_line='';
-                for(let i = 0; i < response["patients"].length; i++) {
-                    let obj = response["patients"][i];
+								console.log(response["patient"].length);
+                for(let i = 0; i < response["patient"].length; i++) {
+                    let obj = response["patient"][i];
                     /**  To add an effect in the table, we can apply
                          even and odd classes. */                    
                     if (i%2 ==0){
-                        tbl_line = '<tr class="even-row"><td>'+obj.last+'</td><td>'+obj.first+'</td><td>'+obj.bday+'</td><td>'+obj.dday+'</td><td>'+obj.drivers+'</td><td>'+obj.passport+'</td><td>'+obj.race+'</td><td>'+obj.ethnicity+'</td><td>'+obj.gender+'</td><td>'+obj.birthplace+'</td><td>'+obj.address+'</td><td>'+obj.city+'</td><td>'+obj.county+'</td><td>'+obj.zip+'</td><td>'+obj.healthExpenses+'</td><td>'+obj.healthCoverage+'</td><td>'+obj.symptoms+'</td><tr/>';
+                        tbl_line = tbl_line + '<tr class="even-row"><td>'+obj.last+'</td><td>'+obj.first+'</td><td>'+obj.bday+'</td><td>'+obj.dday+'</td><td>'+obj.drivers+'</td><td>'+obj.passport+'</td><td>'+obj.race+'</td><td>'+obj.ethnicity+'</td><td>'+obj.gender+'</td><td>'+obj.birthplace+'</td><td>'+obj.address+'</td><td>'+obj.city+'</td><td>'+obj.county+'</td><td>'+obj.zip+'</td><td>'+obj.healthExpenses+'</td><td>'+obj.healthCoverage+'</td><td>'+obj.symptoms+'</td><tr/>';
                     }else{
-                        tbl_line = '<tr class="odd-row"><td>'+obj.last+'</td><td>'+obj.first+'</td><td>'+obj.bday+'</td><td>'+obj.dday+'</td><td>'+obj.drivers+'</td><td>'+obj.passport+'</td><td>'+obj.race+'</td><td>'+obj.ethnicity+'</td><td>'+obj.gender+'</td><td>'+obj.birthplace+'</td><td>'+obj.address+'</td><td>'+obj.city+'</td><td>'+obj.county+'</td><td>'+obj.zip+'</td><td>'+obj.healthExpenses+'</td><td>'+obj.healthCoverage+'</td><td>'+obj.symptoms+'</td><tr/>';
+                        tbl_line = tbl_line + '<tr class="odd-row"><td>'+obj.last+'</td><td>'+obj.first+'</td><td>'+obj.bday+'</td><td>'+obj.dday+'</td><td>'+obj.drivers+'</td><td>'+obj.passport+'</td><td>'+obj.race+'</td><td>'+obj.ethnicity+'</td><td>'+obj.gender+'</td><td>'+obj.birthplace+'</td><td>'+obj.address+'</td><td>'+obj.city+'</td><td>'+obj.county+'</td><td>'+obj.zip+'</td><td>'+obj.healthExpenses+'</td><td>'+obj.healthCoverage+'</td><td>'+obj.symptoms+'</td><tr/>';
                     }                    
                     $("#table-symp-list").append(tbl_line)
                 }
-				let tbl = '<table id="table-symp-list"><tr><th>Surname</th><th>Given Name</th><th>SSN</th><th>Birthday</th><th>Date of Death</th><th>Drivers License</th><th>Passport</th><th>Race</th><th>Ethnicity</th><th>Gender</th><th>Birthplace</th><th>Address</th><th>City</th><th>County/Region</th><th>Postal Code</th><th>Expenses</th><th>Coverage</th><th>Symptoms</th></tr></table>';
+				let tbl = '<table id="table-symp-list"><tr><th>Surname</th><th>Given Name</th><th>SSN</th><th>Birthday</th><th>Date of Death</th><th>Drivers License</th><th>Passport</th><th>Race</th><th>Ethnicity</th><th>Gender</th><th>Birthplace</th><th>Address</th><th>City</th><th>County/Region</th><th>Postal Code</th><th>Expenses</th><th>Coverage</th><th>Symptoms</th></tr>'+tbl_line+'</table>';
             $("#list-symptoms").append(tbl);
 			},
             error: function(xhr, status, error){
