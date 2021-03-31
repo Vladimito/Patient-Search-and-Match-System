@@ -16,8 +16,8 @@ $(document).ready(function(){
             success: function(response){
                 console.log(response);
 				let tbl_line='';
-                for(let i = 0; i < response["patients"].length; i++) {
-                    let obj = response["patients"][i];
+                for(let i = 0; i < response.length; i++) {
+                    let obj = response[i];
                     /**  To add an effect in the table, we can apply
                          even and odd classes. */                    
                     if (i%2 ==0){
