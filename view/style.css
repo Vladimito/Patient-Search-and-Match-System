@@ -7,7 +7,7 @@ input {
 .tab {
     width: 100%;
     overflow: hidden;
-    border: 2px solid #0000cc;
+    border: 2px solid #000099;
     background-color: #ffffff;
 }
   
@@ -24,11 +24,11 @@ input {
 }
   
 .tab button:hover {
-    background-color: #0099ff;
+    background-color: #9999ff;
 }
   
 .tab button.active {
-    background-color: #008ae6;
+    background-color: #4d4dff;
 }
   
 .tabcontent {
@@ -62,8 +62,8 @@ th {
 }
 
 input[type=text], select {
-  background-color: #ccffff;
-  border: 1px solid #003366;
+  background-color: #e6e6ff;
+  border: 1px solid #000080;
   border-radius: 4px;
 }
 
@@ -72,25 +72,25 @@ body {
 }
 
 h1 {
-  color: #003399;
+  color: #0000b3;
   text-align: center;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 h2 {
-  color: #003399;
+  color: #0000b3;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 label {
-  color: #003399;
+  color: #0000b3;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 p {
   font-size: 15px;
   text-align: center;
-  color: #003399;
+  color: #0000b3;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -112,24 +112,24 @@ p {
   clear: both;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
+table, th, td {
+	width: 75%;
+  border: 1px solid black;
   padding: 15px;
 }
 
 tr:hover {background-color: #f5f5f5;}
 
 .odd-row {
-	background-color: #eeeeee;
+	background-color: #e6e6ff;
 }
 
 .odd-row:hover {
-	background-color: #cccccc;
+	background-color: #9999ff;
 }
 
 .even-row:hover {
-	background-color: #cccccc;
+	background-color: #9999ff;
 }
 
 p.des {
