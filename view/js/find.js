@@ -110,7 +110,7 @@ $(document).ready(function(){
             success: function(response){
                 console.log(response);
                 $("#find-out").text(response.msg);
-                fillFindContainer(response.data);              
+                fillFindContainer(response.patients);              
             },                   
             error: function(xhr, status, error){
                 var errorMessage = xhr.status + ': ' + xhr.statusText
