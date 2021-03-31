@@ -58,9 +58,9 @@ $(document).ready(function(){
                     /**  To add an effect in the table, we can apply
                          even and odd classes. */                    
                     if (i%2 ==0){
-                        tbl_line = tbl_line + '<tr class="even-row"><td>'+obj.last+'</td><td>'+obj.first+'</td><td>'+obj.bday+'</td><td>'+obj.dday+'</td><td>'+obj.drivers+'</td><td>'+obj.passport+'</td><td>'+obj.race+'</td><td>'+obj.ethnicity+'</td><td>'+obj.gender+'</td><td>'+obj.birthplace+'</td><td>'+obj.address+'</td><td>'+obj.city+'</td><td>'+obj.county+'</td><td>'+obj.zip+'</td><td>'+obj.healthExpenses+'</td><td>'+obj.healthCoverage+'</td><td>'+obj.symptoms+'</td><tr/>';
+                        tbl_line = '<tr class="even-row"><td>'+obj.last+'</td><td>'+obj.first+'</td><td>'+ obj.ssn+'</td><td>'+obj.bday+'</td><td>'+obj.dday+'</td><td>'+obj.drivers+'</td><td>'+obj.passport+'</td><td>'+obj.race+'</td><td>'+obj.ethnicity+'</td><td>'+obj.gender+'</td><td>'+obj.birthplace+'</td><td>'+obj.address+'</td><td>'+obj.city+'</td><td>'+obj.county+'</td><td>'+obj.zip+'</td><td>'+obj.healthExpenses+'</td><td>'+obj.healthCoverage+'</td><td>'+obj.symptoms+'</td><tr/>';
                     }else{
-                        tbl_line = tbl_line + '<tr class="odd-row"><td>'+obj.last+'</td><td>'+obj.first+'</td><td>'+obj.bday+'</td><td>'+obj.dday+'</td><td>'+obj.drivers+'</td><td>'+obj.passport+'</td><td>'+obj.race+'</td><td>'+obj.ethnicity+'</td><td>'+obj.gender+'</td><td>'+obj.birthplace+'</td><td>'+obj.address+'</td><td>'+obj.city+'</td><td>'+obj.county+'</td><td>'+obj.zip+'</td><td>'+obj.healthExpenses+'</td><td>'+obj.healthCoverage+'</td><td>'+obj.symptoms+'</td><tr/>';
+                        tbl_line = '<tr class="odd-row"><td>'+obj.last+'</td><td>'+obj.first+'</td><td>'+ obj.ssn+'</td><td>'+obj.bday+'</td><td>'+obj.dday+'</td><td>'+obj.drivers+'</td><td>'+obj.passport+'</td><td>'+obj.race+'</td><td>'+obj.ethnicity+'</td><td>'+obj.gender+'</td><td>'+obj.birthplace+'</td><td>'+obj.address+'</td><td>'+obj.city+'</td><td>'+obj.county+'</td><td>'+obj.zip+'</td><td>'+obj.healthExpenses+'</td><td>'+obj.healthCoverage+'</td><td>'+obj.symptoms+'</td><tr/>';
                     }                    
                     $("#table-symp-list").append(tbl_line)
                 }
