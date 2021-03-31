@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <head>
     <title>Patient Search and Match</title>
-    <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <h1>Patient Search and Match System</h1>
@@ -39,7 +44,7 @@
                 <input type="text" id="add-first">
                 <label for="add-last">Surname*</label>
                 <input type="text" id="add-last">
-                <label for="add-Suffix">Suffix</label>
+                <label for="add-suffix">Suffix</label>
                 <input type="text" id="add-suffix">
                 <label for="add-maiden">Maiden Name</label>
                 <input type="text" id="add-maiden">
@@ -129,7 +134,7 @@
                     <input type="text" id="find-first">
                     <label for="find-last">Last Name</label>
                     <input type="text" id="find-last">
-                    <label for="find-Suffix">Suffix</label>
+                    <label for="find-suffix">Suffix</label>
                     <input type="text" id="find-suffix">
                     <label for="find-maiden">Maiden Name</label>
                     <input type="text" id="find-maiden">
@@ -185,7 +190,7 @@
             </div>
             <div class="button">
                 <button id="search-patient-btn">Search Symptom</button>
-                <output id="search-out"></output>
+                <output id="search-out" class="tabcontent"></output>
             </div>
         </form>
         <div id="list-symptoms" class="tabcontent"></div>
