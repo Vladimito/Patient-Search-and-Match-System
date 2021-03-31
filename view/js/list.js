@@ -42,6 +42,7 @@ $(document).ready(function(){
         event.preventDefault();
         let symptoms = $("#search-symptom").val();
         $("#list-symptoms").empty();
+		//$("#search-out").empty();
 
         $.ajax({
             url: '/system/symptoms/'+symptoms,
@@ -64,6 +65,8 @@ $(document).ready(function(){
                 }
 				let tbl = '<table id="table-symp-list"><tr><th>Surname</th><th>Given Name</th><th>SSN</th><th>Birthday</th><th>Date of Death</th><th>Drivers License</th><th>Passport</th><th>Race</th><th>Ethnicity</th><th>Gender</th><th>Birthplace</th><th>Address</th><th>City</th><th>County/Region</th><th>Postal Code</th><th>Expenses</th><th>Coverage</th><th>Symptoms</th></tr>'+tbl_line+'</table>';
             $("#list-symptoms").append(tbl);
+			$("#search-out").html(tbl);
+			//$("#search-out").append(tbl);
 			},
             error: function(xhr, status, error){
                 var errorMessage = xhr.status + ': ' + xhr.statusText
