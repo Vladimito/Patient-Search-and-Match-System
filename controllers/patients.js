@@ -53,10 +53,11 @@ const all = async(req,res) =>{
 	let db = req.db;
 	try{
 		let obj = await Patient.getPatients(db);
-		console.log('server-side: ' + obj.patient.length+' patient(s) were returned'); //PATIENT_DATABASE
+		console.log('server-side: ' + obj.patients.length+' patient(s) were returned');
 		res.send(obj);
 	}catch(err){
 		res.send('There was an error while retrieving all Patients. (err:'+err+')');
+		console.log("err: " + err);
 		throw new Error(err);
 	}
 }

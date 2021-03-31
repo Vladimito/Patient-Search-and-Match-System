@@ -206,7 +206,7 @@ class Patient {
             let collection = await _get_patients_collection(db);
             await collection.find({},options).toArray((err,items)=>{
                 if(err) return reject(err);
-                resolve({patient: items,msg: 'client-side: The patients were successfully retrieved'});
+                resolve({patients: items,msg: 'client-side: The patients were successfully retrieved'});
             });
         });
     }
