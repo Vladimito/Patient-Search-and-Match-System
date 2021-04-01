@@ -34,6 +34,7 @@ $(document).ready(function(){
             $("#find-lon").val(data.lon);
             $("#find-healthExpense").val(data.healthExpenses);
             $("#find-healthCoverage").val(data.healthCoverage);
+            $("#find-symptoms").val(data.symptoms);
         }else{
             $("#find-id").val("");
             $("#find-bday").val("");
@@ -60,6 +61,7 @@ $(document).ready(function(){
             $("#find-lon").val("");
             $("#find-healthExpense").val("");
             $("#find-healthCoverage").val("");
+            $("#find-symptoms").val("");
         }      
     }
     /**
@@ -93,7 +95,7 @@ $(document).ready(function(){
         c.lon = $("#find-lon").val();
         c.healthExpenses = $("#find-healthExpense").val();
         c.healthCoverage = $("#find-healthCoverage").val();
-        c.symptoms = $("#find-symptoms")
+        c.symptoms = $("#find-symptoms").val();
         
         return c;
     }
