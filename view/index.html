@@ -16,7 +16,8 @@
         <button class="tablinks">Add</button>
         <button class="tablinks">Find</button>        
         <button id="btn-list-all" class="tablinks">List</button> 	
-		<button id="" class="tablinks">Search</button>   
+		<button id="" class="tablinks">Search</button> 
+        <button class="tablinks">Financial</button>  
       </div>
 	  
 	  <div id="add-patient-tab" class="tabcontent">
@@ -196,9 +197,37 @@
         </form>
         <div id="list-symptoms" class="tabcontent"></div>
     </div>
-	<script src="./js/main.js"></script> 
-	  <script src="./js/add.js"></script>  
-	  <script src="./js/list.js"></script> 
-	<script src="./js/find.js"></script> 
 
+    <div id="financial-patient" class="tabcontent">
+        <h2> Enter an ID to see information for the associated patient financial data </h2>
+          <form>
+              <label for="financial-id">Patient ID</label>
+              <input type="text" id="financial-id-search">
+              <div>
+                  <button id="btn-financial-patient">Find</button>
+                  <output id="financial-out"></output>
+              </div>
+          </form>
+          <hr>
+          <h2>Patient Financial Information</h2>
+          <div class="flex-container">  
+              <form>         
+                <label for="financial-healthExpense">Health Expenses</label>
+                <input type="text" id="financial-healthExpense">
+                <label for="financial-healthCoverage">Health Coverage</label>
+                <input type="text" id="financial-healthCoverage">
+                <label for="financial-total">Total Expenses after Coverage</label>
+                <input type="text" id="financial-total" readonly>
+                  <div class="button">
+                      <button id="btn-update-patient">Update</button>
+                      <output id="update-delete-out"></output>
+                  </div>
+              </form> 
+          </div>                  
+    </div> 
+	<script src="./js/main.js"></script> 
+	<script src="./js/add.js"></script>  
+	<script src="./js/list.js"></script> 
+	<script src="./js/find.js"></script> 
+    <script src="./js/financial.js"></script>
 </body>
