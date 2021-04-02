@@ -7,6 +7,6 @@ router.post("/",patientController.create)
 router.get("/all", patientController.all)
 router.get("/:id", patientController.getOne)
 router.get("/symptoms/:symptoms", patientController.allSymps)
-router.get("/delete/:id", patientController.deleteOne)
-router.put("/update/:id",patientController.updateOne)
+router.delete("/:id", patientController.deleteOne)
+router.put("/:id",patientController.updateOne)
 module.exports = router
