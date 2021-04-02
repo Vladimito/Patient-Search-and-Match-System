@@ -5,7 +5,6 @@
 	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -141,7 +140,12 @@
                     <label for="find-maiden">Maiden Name</label>
                     <input type="text" id="find-maiden">
                     <label for="find-marital">Marital Status</label>
-                    <input type="text" id="find-marital">
+                    <select id="find-marital" name="find-marital">
+                        <option value="Married">Married</option>
+                        <option value="Never married">Never married</option>
+                        <option value="Divorced">Divorced</option>
+                        <option value="Widowed">Widowed</option>
+                    </select><br>
                 </div>
                 <div class="column">
                     <label for="find-race">Race</label>
@@ -149,7 +153,10 @@
                     <label for="find-ethnicity">Ethnicity</label>
                     <input type="text" id="find-ethnicity">
                     <label for="find-gender">Gender</label>
-                    <input type="text" id="find-gender">
+                    <select id="find-gender" name="find-gender">
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                    </select><br>
                     <label for="find-birthplace">Place of Birth</label>
                     <input type="text" id="find-birthplace">
                     <label for="find-address">Address</label>
