@@ -103,24 +103,24 @@ describe('Testing the Patient API', async function(){
             .catch(result => console.log("Error: " + result))
         });
         let ogid = 'b132f06d-2836-0e70-b691-f67b381fcfb0';
-        let nid = '09fae2f3e-576e-2c57-c4c5-f62b6e19da3';
-        let newHealthExpen = 23593;
-        let newAdd = '580 Quitzon Avenue Suite 58';
-        let newCity = 'Concord';
-        let newZip2 = '56773';
+        let newSymptoms = "chest pains, fever";
+        let newAdd = "20 Wexford St.";
+        let newCity = "St. John's";
+        let newZip2 = "D35K87";
+        let newHealthExpen = 28999;
         it('Testing the update of patient 1\'s information ',async function(){
-            updatePromise = Patient.update(db,ogid,nid,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,newAdd,newCity,county,newZip2,lat,lon,newHealthExpen,healthCoverage,symptoms);
-            let pass = 'client-side: Document was correctly updated';
+            updatePromise = Patient.update(db,ogid,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,newAdd,newCity,county,newZip2,lat,lon,newHealthExpen,healthCoverage,newSymptoms);
+            let pass = 'client-side: The patient was updated correctly';
             await updatePromise.then(result => assert.strictEqual(result.msg,pass))
             .catch(result => console.log("Error: " + result))
         });
-        it('Testing if Patient.update() will reject an invalid ID', async function(){
+        /*it('Testing if Patient.update() will reject an invalid ID', async function(){
             let pupId = '7951157f4-374b-64fa-8e2e-b12c19cb077';
             let fail = "client-side: Cannot update document that doesn\'t exist";
             updatePromise = Patient.update(db,ogid,pupId,bday,ssn,first,last,race,ethnicity,gender,birthplace,newAdd,newCity,county,newZip2,lat,lon,newHealthExpen,healthCoverage);
             await updatePromise.then(result => console.log("Result: " + result))
             .catch(result => assert.strictEqual(result.msg, fail))
-        });
+        });*/
         it('Testing Patient.getPatientByID() - should properly send success message',async function(){
             let nid = "09fae2f3e-576e-2c57-c4c5-f62b6e19da3";
             let pass = "client-side: Patient correctly retrieved";
@@ -128,7 +128,7 @@ describe('Testing the Patient API', async function(){
             await getByIDProm.then(result => assert.strictEqual(result.msg,pass))
             .catch(result => console.log("Error: " + result))
         });
-        it('Testing deletion of patient from database Patient.delete()', async function(){
+        /*it('Testing deletion of patient from database Patient.delete()', async function(){
             deleteProm = Patient.delete(db,ogid);
             let pass = 'client-side: The patient was deleted from the database';
             await deleteProm.then(result => assert.strictEqual(result.msg,pass))
@@ -139,7 +139,7 @@ describe('Testing the Patient API', async function(){
             let fail = "client-side: patient was not correctly deleted";
             await deleteProm.then(result => console.log(result))
             .catch(result => assert.strictEqual(result.msg,fail))
-        });
+        });*/
         it('Testing output of all patients in a db with Patient.getPatients(). ',async function(){
             getAllProm = Patient.getPatients(db);
             let pass = 'client-side: The patients were successfully retrieved'
