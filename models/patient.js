@@ -29,6 +29,7 @@ function patientIDGen() {
     }
     return PID;
 }
+
 class Patient {
     constructor(id, bday,dday, ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,state,county,zip,lat,lon,healthExpenses,healthCoverage,symptoms) {
         this.id = id
@@ -137,19 +138,20 @@ class Patient {
 
     //Updates patient information if something is not entered it is assumed that the value of the attribute is an empty string/0
     //Current implementation is not all that efficient at the moment
-    static async update(db,ogid,newid,bday,dday,ssn,drivers,passport,prefix,first,last,suffix,maiden,marital,race,ethnicity,gender,birthplace,address,city,county,zip,lat,lon,healthExpenses,healthCoverage,symptoms){
+    static async update(db,id,nid,bday,dday="",ssn,drivers="",passport="",prefix="",first,last,suffix="",maiden="",marital="",race="",ethnicity="",gender="",birthplace="",address="",city="",state="",county="",zip=0,lat=0,lon=0,healthExpenses=0,healthCoverage=0,symptoms=""){
         return new Promise(async function(resolve,reject){
             let collection = await _get_patients_collection(db);
-            let findP = await collection.findOne({id:ogid},{upsert: true});
-            if(findP != null || findP != undefined){
-                await collection.updateOne({id: ogid},
-                    {$set: {"id": newid, "bday": bday,"dday": dday,"ssn":ssn,"drivers":drivers,"passport":passport,"prefix": prefix,"first": first,"last": last,"suffix": suffix,"maiden": maiden,"marital": marital,"race": race,"ethnicity":ethnicity,"gender":gender,"birthplace":birthplace,"address":address,"city":city,"county":county,"zip":zip,"lat": lat,"lon": lon,"healthExpenses": healthExpenses,"healthCoverage": healthCoverage,"symptoms":symptoms}})
-                    console.log("Document with id = " + ogid + "was updated");
-                    resolve({msg: 'client-side: Document was correctly updated'})
-    
-            }else{
-                reject({msg: 'client-side: Cannot update document that doesn\'t exist'});
-            }
+            let new_vals = {$set: {"id": nid, "bday": bday, "dday": dday, "ssn":ssn, "drivers": drivers, "passport": passport, "prefix": prefix, "first": first, "last": last, "suffix": suffix, "maiden": maiden, "marital": marital, "race": race, "ethnicity": ethnicity, "gender": gender, "birthplace": birthplace, "address": address, "city": city, "state": state, "county": county, "zip": zip, "lat": lat, "lon": lon,"healthCoverage": healthCoverage, "healthExpenses": healthExpenses, "symptoms": symptoms}};
+            collection.updateOne({"id": id},new_vals, (err,obj) =>{
+                if(err) return reject(err);
+                if(obj.modifiedCount > 0){
+                    console.log("server-side: 1 document updated");
+                    resolve({msg: 'client-side: The patient was updated correctly'});
+                }else{
+                    console.log("server-side: The patient was not updated");
+                    reject({msg: 'client-side The new patient data is not valid or is the same'});
+                }
+            });
         });
 
     }   
@@ -159,15 +161,15 @@ class Patient {
         var id_delete =id;
         return new Promise(async function(resolve,reject){
             let collection = await _get_patients_collection(db);
-            let deleted = await collection.deleteOne({id: id_delete});
-            if(deleted === true){
-                console.log("deleted item exist");
-                resolve({msg: "client-side: patient was correctly deleted"});
-            }
-            else{
-                console.log("deleted item doesn't exist");
-                reject({msg: "client-side: patient was not correctly deleted"});
-            }
+            collection.deleteOne({'id': id_delete}, (err,obj)=>{
+                if(err) return reject(err);
+                if(obj.result.n> 0){
+                    console.log("server-side: 1 Patient was deleted");
+                    resolve({msg: 'client-side: The patient was deleted'});
+                }else{
+                    resolve({msg: 'client-side: The patient was not found'});
+                }
+            });
         });
     }
 
