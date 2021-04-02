@@ -125,18 +125,22 @@ $(document).ready(function(){
      */
     $("#btn-update-patient").click(function(event){
         event.preventDefault();
+        console.log("clicked once");
         let patient_id = $("#find-id-search").val();
         let patient = assemble();
+        console.log("Patient: from within find.js: " + JSON.stringify(patient));
         $.ajax({
-            url: '/system/update/'+patient_id,
+            url: 'system/'+patient_id,
             type: 'PUT',
             data: JSON.stringify(patient),
             contentType: 'application/json',                        
             success: function(response){
+                console.log("Patient ID: " + patient_id);
                 console.log(response);
                 $("#update-delete-out").text(response.msg);                
             },                   
             error: function(xhr, status, error){
+                console.log("Patient ID: " + patient_id);
                 var errorMessage = xhr.status + ': ' + xhr.statusText
                 alert('Error - ' + errorMessage);
             }
@@ -149,7 +153,7 @@ $(document).ready(function(){
         event.preventDefault();
         let patient_id = $("#find-id-search").val();
         $.ajax({
-            url: '/system/delete/'+patient_id,
+            url: '/system/'+patient_id,
             type: 'DELETE',
             contentType: 'application/json',                        
             success: function(response){
